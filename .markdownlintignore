@@ -1,0 +1,28 @@
+# Dependências
+node_modules/
+vendor/
+
+# Build/artefatos gerados
+dist/
+build/
+out/
+coverage/
+.tmp/
+.temp/
+.cache/
+
+# Ambientes e infra local
+.venv/
+venv/
+.env
+.env.*
+*.log
+
+# GitHub internals
+.github/CODEOWNERS.backup
+
+# Arquivos compactados/gerados
+*.min.md
+
+# (Opcional) se futuramente houver docs geradas automaticamente:
+# docs/generated/

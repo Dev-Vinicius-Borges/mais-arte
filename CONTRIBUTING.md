@@ -1,6 +1,6 @@
-# Guia de Contribuição — +Arte Curitiba
+# Guia de Contribuição — +Arte
 
-Obrigado por contribuir com o +Arte Curitiba.  
+Obrigado por contribuir com o +Arte.  
 Este documento define **como contribuir de forma técnica, organizada e responsável**.
 
 > **Regra central:** neste projeto, contribuição sem processo **não é aceita**.

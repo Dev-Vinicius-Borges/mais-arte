@@ -1,4 +1,4 @@
-# +Arte Curitiba
+# +Arte
 
 alteração teste....
 
@@ -20,7 +20,7 @@ Consulte o arquivo [`LICENSE`](./LICENSE) para os termos completos.
 
 ## Sumário
 
-- [+Arte Curitiba](#arte-curitiba)
+- [+Arte](#arte)
   - [Aviso legal importante](#aviso-legal-importante)
   - [Sumário](#sumário)
   - [1. Visão geral](#1-visão-geral)
@@ -43,7 +43,7 @@ Consulte o arquivo [`LICENSE`](./LICENSE) para os termos completos.
 
 ## 1. Visão geral
 
-O **+Arte Curitiba** nasce para resolver a fragmentação de informações culturais da cidade, conectando em um único ambiente:
+O **+Arte** nasce para resolver a fragmentação de informações culturais da cidade, conectando em um único ambiente:
 
 - artistas independentes;
 - bandas e coletivos;

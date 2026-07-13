@@ -117,5 +117,3 @@ Closes #
 - [ ] Escopo está coerente com a Issue
 - [ ] Não há item crítico pendente
 - [ ] PR está apta para merge
-
-alteração teste

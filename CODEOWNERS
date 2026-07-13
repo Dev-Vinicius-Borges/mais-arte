@@ -1,0 +1,49 @@
+# Este arquivo define responsáveis por revisão/aprovação por caminho.
+# Recomenda-se manter branch protection com "Require review from Code Owners".
+
+# =========================
+# Regra padrão (fallback)
+# =========================
+* @Dev-Vinicius-Borges
+
+# =========================
+# Governança e processo
+# =========================
+README.md @Dev-Vinicius-Borges
+CONTRIBUTING.md @Dev-Vinicius-Borges
+CODEOWNERS @Dev-Vinicius-Borges
+LICENSE @Dev-Vinicius-Borges
+
+.github/** @Dev-Vinicius-Borges
+docs/00-carta-de-engenharia.md @Dev-Vinicius-Borges
+docs/processo/** @Dev-Vinicius-Borges
+docs/adr/** @Dev-Vinicius-Borges
+
+# =========================
+# Arquitetura e dados
+# =========================
+docs/05-arquitetura.md @Dev-Vinicius-Borges
+docs/06-modelo-de-dados.md @Dev-Vinicius-Borges
+diagrams/arquitetura/** @Dev-Vinicius-Borges
+diagrams/banco/** @Dev-Vinicius-Borges
+database/** @Dev-Vinicius-Borges
+
+# =========================
+# Código de aplicação
+# =========================
+backend/** @Dev-Vinicius-Borges
+frontend/** @Dev-Vinicius-Borges
+docker/** @Dev-Vinicius-Borges
+
+# =========================
+# Documentação de produto/domínio
+# (Você pode adicionar coowners depois)
+# =========================
+docs/01-visao-do-produto.md @Dev-Vinicius-Borges
+docs/02-regras-de-negocio.md @Dev-Vinicius-Borges
+docs/03-modelo-de-dominio.md @Dev-Vinicius-Borges
+docs/04-casos-de-uso.md @Dev-Vinicius-Borges
+docs/07-roadmap-mvp.md @Dev-Vinicius-Borges
+docs/08-glossario.md @Dev-Vinicius-Borges
+docs/09-deploy.md @Dev-Vinicius-Borges
+diagrams/dominio/** @Dev-Vinicius-Borges

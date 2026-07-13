@@ -14,7 +14,7 @@ CONTRIBUTING.md @Dev-Vinicius-Borges
 CODEOWNERS @Dev-Vinicius-Borges
 LICENSE @Dev-Vinicius-Borges
 
-.github/** @Dev-Vinicius-Borges
+.github/** @AirtonRicardo
 docs/00-carta-de-engenharia.md @Dev-Vinicius-Borges
 docs/processo/** @Dev-Vinicius-Borges
 docs/adr/** @Dev-Vinicius-Borges

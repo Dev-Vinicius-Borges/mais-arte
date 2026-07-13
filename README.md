@@ -1,5 +1,7 @@
 # +Arte Curitiba
 
+alteração teste....
+
 Plataforma web colaborativa para mapear, organizar e divulgar artistas, bandas, espaços culturais e eventos do cenário cultural de Curitiba.
 
 > **Status atual:** em estruturação técnica do MVP (Produto Mínimo Viável).  

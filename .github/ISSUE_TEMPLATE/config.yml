@@ -1,0 +1,15 @@
+blank_issues_enabled: false
+
+contact_links:
+
+  - name: Guia de Contribuição
+    url: https://github.com/Dev-Vinicius-Borges/mais-arte/blob/main/CONTRIBUTING.md
+    about: Leia o fluxo oficial de contribuição antes de abrir uma issue.
+
+  - name: Carta de Engenharia
+    url: https://github.com/Dev-Vinicius-Borges/mais-arte/blob/main/docs/00-carta-de-engenharia.md
+    about: Regras de escopo, qualidade e governança do projeto.
+
+  - name: Política de Uso de IA
+    url: https://github.com/Dev-Vinicius-Borges/mais-arte/blob/main/docs/processo/politica-de-uso-de-ia.md
+    about: Uso permitido e proibido de IA nas entregas.

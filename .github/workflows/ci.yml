@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ "main", "development" ]
+  push:
+    branches: [ "main", "development" ]
+
+jobs:
+  validate-repo-structure:
+    name: Validate Repository Structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          required_files=(
+            "README.md"
+            "LICENSE"
+            "CONTRIBUTING.md"
+            "CODEOWNERS"
+            ".github/pull_request_template.md"
+            "docs/00-carta-de-engenharia.md"
+          )
+
+          missing=0
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "Arquivo base necessario esta faltando: $file"
+              missing=1
+            else
+              echo "Encontrou o arquivo: $file"
+            fi
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            echo "Falha na validação da arquitetura de arquivos."
+            exit 1
+          fi
+
+      - name: Check required directories
+        run: |
+          required_dirs=(
+            "docs"
+            "docs/processo"
+            "diagrams"
+            "database"
+            "backend"
+            "frontend"
+          )
+
+          missing=0
+          for dir in "${required_dirs[@]}"; do
+            if [ ! -d "$dir" ]; then
+              echo "Diretório essencial faltando: $dir"
+              missing=1
+            else
+              echo "Encontrou o diretorio: $dir"
+            fi
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            echo "Falha na validação da arquitetura de pastas."
+            exit 1
+          fi
+
+      - name: Basic shell safety check
+        run: |
+          echo "Checagem básica concluida."

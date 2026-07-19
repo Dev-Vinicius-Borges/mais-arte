@@ -222,4 +222,4 @@ Em caso de conflito técnico ou ambiguidade de requisito:
 
 | Versão | Data | Autor | Mudanças |
 | -------- | ------------ | ------- | ---------- |
-| 1.0.0 | 2026-07-12 | Equipe +Arte | Criação do guia oficial de contribuição com fluxo, qualidade e política de IA. |
+| 1.0.0 | 2026-07-12 | Vinícius Borges | Criação do guia oficial de contribuição com fluxo, qualidade e política de IA. |

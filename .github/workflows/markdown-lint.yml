@@ -16,7 +16,7 @@ on:
 
 jobs:
   markdown-lint:
-    name: Lint Markdown Files
+    name: Padronização de Markdown (lint)
     runs-on: ubuntu-latest
 
     steps:

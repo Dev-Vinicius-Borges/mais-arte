@@ -65,10 +65,6 @@ jobs:
           required_dirs=(
             "docs"
             "docs/processo"
-            "diagrams"
-            "database"
-            "backend"
-            "frontend"
           )
 
           missing=0

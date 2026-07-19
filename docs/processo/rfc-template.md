@@ -1,11 +1,20 @@
 # RFC Template
 
 **Versão:** 1.0.0  
-**Data:** 2026-07-19
+**Data:** 2026-07-19  
 **Status:** Ativo  
 **Responsável:** Vinícius Borges
 
 ---
+
+## 1. Objetivo
+
+Definir um padrão de estrutura textual para Requests for Change (RFC) no projeto, garantindo rastreabilidade, priorização e execução previsível.
+
+> O conteúdo descritivo da RFC é definido pelo template oficial em
+> `.github/ISSUE_TEMPLATE/rfc_mudanca_escopo.md`.
+
+Abaixo será detalhado o padrão de estrutura textual para RFCs, incluindo seções obrigatórias, critérios de aceite e governança.
 
 ## 1. Identificação da RFC
 

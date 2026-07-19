@@ -36,9 +36,6 @@ A estrutura textual de cada Issue deve seguir os templates já existentes em:
 
 - `.github/ISSUE_TEMPLATE/`
 
-Este documento **não substitui** nem duplica os templates.  
-Ele define apenas as regras de uso e governança.
-
 ---
 
 ## 4. Regras obrigatórias de criação

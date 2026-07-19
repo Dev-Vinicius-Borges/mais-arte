@@ -1,0 +1,33 @@
+{
+  "config": {
+    "default": true,
+
+    "MD013": false,
+    "MD024": false,
+
+    "MD033": false,
+    "MD041": false,
+
+    "MD003": { "style": "atx" },
+    "MD004": { "style": "dash" },
+    "MD005": true,
+    "MD007": { "indent": 2 },
+    "MD009": { "br_spaces": 2, "strict": false },
+    "MD010": true,
+    "MD012": { "maximum": 1 },
+    "MD022": { "lines_above": 1, "lines_below": 1 },
+    "MD025": true,
+    "MD026": { "punctuation": ".,;:!" },
+    "MD029": { "style": "ordered" },
+    "MD030": true,
+    "MD031": true,
+    "MD032": true,
+    "MD034": true,
+    "MD035": { "style": "---" },
+    "MD036": false,
+    "MD040": true,
+    "MD046": { "style": "fenced" },
+    "MD047": true,
+    "MD048": { "style": "backtick" }
+  }
+}

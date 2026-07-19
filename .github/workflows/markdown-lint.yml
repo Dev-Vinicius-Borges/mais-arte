@@ -6,11 +6,13 @@ on:
     paths:
       - "**.md"
       - ".github/workflows/markdown-lint.yml"
+      - ".markdownlint-cli2.jsonc"
   push:
     branches: [ "main", "development" ]
     paths:
       - "**.md"
       - ".github/workflows/markdown-lint.yml"
+      - ".markdownlint-cli2.jsonc"
 
 jobs:
   markdown-lint:
@@ -24,5 +26,6 @@ jobs:
       - name: Run markdownlint-cli2
         uses: DavidAnson/markdownlint-cli2-action@v16
         with:
+          config: ".markdownlint-cli2.jsonc"
           globs: |
             **/*.md

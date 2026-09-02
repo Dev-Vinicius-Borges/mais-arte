@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-caption: var(--text-caption);
+  --color-text-link: var(--text-link);
+  --color-text-link-hover: var(--text-link-hover);
+  --color-text-invert: var(--text-invert);
+  --color-text-success: var(--text-success);
+  --color-text-warning: var(--text-warning);
+  --color-text-danger: var(--text-danger);
+
+  --color-surface-background: var(--surface-background);
+  --color-surface-foreground-1: var(--surface-foreground-1);
+  --color-surface-foreground-2: var(--surface-foreground-2);
+  --color-surface-foreground-3: var(--surface-foreground-3);
+
+  --color-border-primary: var(--border-primary);
+  --color-border-secondary: var(--border-secondary);
+  --color-border-tertiary: var(--border-tertiary);
+  --color-border-input: var(--border-input);
+
+  --color-alert-info: var(--alert-info);
+  --color-alert-success-surface: var(--alert-success-surface);
+  --color-alert-sucess: var(--alert-sucess);
+  --color-alert-warning-surface: var(--alert-warning-surface);
+  --color-alert-warning: var(--alert-warning);
+  --color-alert-danger-surface: var(--alert-danger-surface);
+  --color-alert-danger: var(--alert-danger);
+  --color-alert-danger-hover: var(--alert-danger-hover);
+  --color-alert-danger-press: var(--alert-danger-press);
+}
+
+:root {
+  color-scheme: light;
+
+  --text-primary: var(--color-slate-950);
+  --text-secondary: var(--color-slate-800);
+  --text-tertiary: var(--color-slate-600);
+  --text-caption: var(--color-slate-400);
+  --text-link: var(--color-sky-600);
+  --text-link-hover: var(--color-sky-700);
+  --text-invert: var(--color-slate-50);
+  --text-success: var(--color-green-900);
+  --text-warning: var(--color-amber-900);
+  --text-danger: var(--color-red-900);
+
+  --surface-background: var(--color-slate-50);
+  --surface-foreground-1: var(--color-slate-100);
+  --surface-foreground-2: var(--color-slate-200);
+  --surface-foreground-3: var(--color-slate-300);
+
+  --border-primary: var(--color-slate-200);
+  --border-secondary: var(--color-slate-300);
+  --border-tertiary: var(--color-slate-400);
+  --border-input: var(--color-slate-400);
+
+  --alert-info: var(--color-sky-500);
+  --alert-success-surface: var(--color-green-300);
+  --alert-sucess: var(--color-green-500);
+  --alert-warning-surface: var(--color-amber-300);
+  --alert-warning: var(--color-amber-500);
+  --alert-danger-surface: var(--color-red-300);
+  --alert-danger: var(--color-red-500);
+  --alert-danger-hover: var(--color-red-600);
+  --alert-danger-press: var(--color-red-700);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --text-primary: var(--color-slate-50);
+  --text-secondary: var(--color-slate-400);
+  --text-tertiary: var(--color-slate-500);
+  --text-caption: var(--color-slate-400);
+  --text-link: var(--color-sky-500);
+  --text-link-hover: var(--color-sky-600);
+  --text-invert: var(--color-slate-950);
+  --text-success: var(--color-green-800);
+  --text-warning: var(--color-amber-800);
+  --text-danger: var(--color-red-800);
+
+  --surface-background: var(--color-slate-950);
+  --surface-foreground-1: var(--color-slate-800);
+  --surface-foreground-2: var(--color-slate-700);
+  --surface-foreground-3: var(--color-slate-600);
+
+  --border-primary: var(--color-slate-700);
+  --border-secondary: var(--color-slate-300);
+  --border-tertiary: var(--color-slate-400);
+  --border-input: var(--color-slate-400);
+
+  --alert-info: var(--color-sky-400);
+  --alert-success-surface: var(--color-green-200);
+  --alert-sucess: var(--color-green-400);
+  --alert-warning-surface: var(--color-amber-200);
+  --alert-warning: var(--color-amber-300);
+  --alert-danger-surface: var(--color-red-200);
+  --alert-danger: var(--color-red-400);
+  --alert-danger-hover: var(--color-red-500);
+  --alert-danger-press: var(--color-red-600);
+}

@@ -1,0 +1,129 @@
+name: RFC - Mudança de Escopo
+description: Propor alteração de escopo, prioridade ou direção do produto
+title: "rfc: "
+labels:
+  - type:rfc
+  - status:discussion
+  - needs:approval
+assignees: []
+body:
+  - type: textarea
+    id: proposta
+    attributes:
+      label: 1) Proposta de mudança
+      description: Descreva claramente a mudança sugerida
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivacao
+    attributes:
+      label: 2) Motivação
+      description: Qual problema/oportunidade justifica a mudança?
+    validations:
+      required: true
+
+  - type: textarea
+    id: situacao_atual
+    attributes:
+      label: 3) Situação atual
+      description: Como está hoje
+
+  - type: textarea
+    id: situacao_proposta
+    attributes:
+      label: 3) Proposta
+      description: Como ficaria
+
+  - type: checkboxes
+    id: impacto_mvp
+    attributes:
+      label: 4) Impacto no MVP
+      options:
+        - label: Não impacta MVP atual
+        - label: Impacta escopo do MVP
+        - label: Adiciona nova funcionalidade fora do MVP
+        - label: Exige replanejamento de sprint
+
+  - type: checkboxes
+    id: impacto_tecnico
+    attributes:
+      label: 5) Impacto técnico estimado
+      options:
+        - label: Front-end
+        - label: Back-end
+        - label: Banco de dados
+        - label: Arquitetura
+        - label: Segurança/Conformidade
+        - label: DevOps/Infra
+
+  - type: dropdown
+    id: esforco
+    attributes:
+      label: 6) Estimativa inicial - Esforço
+      options:
+        - Baixo
+        - Médio
+        - Alto
+
+  - type: dropdown
+    id: risco
+    attributes:
+      label: 6) Estimativa inicial - Risco
+      options:
+        - Baixo
+        - Médio
+        - Alto
+
+  - type: dropdown
+    id: urgencia
+    attributes:
+      label: 6) Estimativa inicial - Urgência
+      options:
+        - Baixa
+        - Média
+        - Alta
+
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: 7) Alternativas consideradas
+      placeholder: |
+        - Alternativa A:
+        - Alternativa B:
+        - Motivo da escolha proposta:
+
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: 8) Trade-offs
+      description: O que se ganha e o que se perde
+
+  - type: textarea
+    id: criterio_decisao
+    attributes:
+      label: 9) Critério de decisão
+      description: Condições objetivas para aprovar/rejeitar
+
+  - type: checkboxes
+    id: aprovacao
+    attributes:
+      label: 10) Aprovação
+      options:
+        - label: Product/Negócio
+        - label: Tech Lead
+        - label: Time (registro em reunião)
+
+  - type: checkboxes
+    id: decisao_final
+    attributes:
+      label: 11) Decisão final (preenchido na revisão)
+      options:
+        - label: Aprovado para ciclo atual
+        - label: Aprovado para backlog futuro
+        - label: Rejeitado
+
+  - type: textarea
+    id: justificativa
+    attributes:
+      label: Justificativa

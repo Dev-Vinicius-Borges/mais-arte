@@ -1,0 +1,105 @@
+name: Bug Report
+description: Reportar comportamento incorreto no sistema
+title: "fix: "
+labels:
+  - type:bug
+  - status:triage
+assignees: []
+body:
+  - type: textarea
+    id: resumo
+    attributes:
+      label: 1) Resumo do bug
+      description: Descrição curta e objetiva
+    validations:
+      required: true
+
+  - type: textarea
+    id: comportamento_atual
+    attributes:
+      label: 2) Comportamento atual
+      description: O que está acontecendo?
+    validations:
+      required: true
+
+  - type: textarea
+    id: comportamento_esperado
+    attributes:
+      label: 3) Comportamento esperado
+      description: O que deveria acontecer?
+    validations:
+      required: true
+
+  - type: textarea
+    id: passos
+    attributes:
+      label: 4) Passos para reproduzir
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidencias
+    attributes:
+      label: 5) Evidências
+      description: Print, vídeo, log, stack trace
+
+  - type: input
+    id: so
+    attributes:
+      label: Sistema operacional
+
+  - type: input
+    id: navegador
+    attributes:
+      label: Navegador/Versão
+
+  - type: input
+    id: branch_commit
+    attributes:
+      label: Branch/Commit (se aplicável)
+
+  - type: input
+    id: data_hora
+    attributes:
+      label: Data/Hora da ocorrência
+
+  - type: checkboxes
+    id: severidade
+    attributes:
+      label: 7) Severidade
+      options:
+        - label: Crítica (bloqueia uso principal)
+        - label: Alta
+        - label: Média
+        - label: Baixa
+
+  - type: checkboxes
+    id: impacto
+    attributes:
+      label: 8) Impacto
+      options:
+        - label: Front-end
+        - label: Back-end
+        - label: Banco de dados
+        - label: Segurança
+        - label: Dados de usuário
+
+  - type: textarea
+    id: possivel_causa
+    attributes:
+      label: 9) Possível causa (opcional)
+      description: Hipótese técnica
+
+  - type: checkboxes
+    id: criterios_aceite
+    attributes:
+      label: 10) Critérios de aceite da correção
+      options:
+        - label: Bug não ocorre mais no cenário reportado
+        - label: Fluxo principal permanece funcional
+        - label: Não gerou regressão aparente
+        - label: Evidência de validação anexada

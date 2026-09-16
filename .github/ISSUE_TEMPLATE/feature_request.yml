@@ -1,0 +1,101 @@
+name: "Feature Request"
+description: "Solicitar nova funcionalidade dentro do escopo do produto"
+title: "feat: "
+labels:
+  - "type:feature"
+  - "status:triage"
+assignees: []
+body:
+  - type: textarea
+    id: contexto
+    attributes:
+      label: "1) Contexto"
+      description: "Qual problema de negócio/usuário essa funcionalidade resolve?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: objetivo
+    attributes:
+      label: "2) Objetivo da funcionalidade"
+      description: "Resultado esperado, em linguagem simples"
+    validations:
+      required: true
+
+  - type: textarea
+    id: escopo_inclui
+    attributes:
+      label: "3) Escopo - Inclui"
+      placeholder: |
+        - ...
+        - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: escopo_nao_inclui
+    attributes:
+      label: "3) Escopo - Não inclui"
+      placeholder: |
+        - ...
+        - ...
+    validations:
+      required: true
+
+  - type: input
+    id: requisitos_funcionais
+    attributes:
+      label: "4) Requisitos funcionais relacionados"
+      description: "Ex.: RF09, RF11"
+
+  - type: textarea
+    id: criterios_aceite
+    attributes:
+      label: "5) Critérios de aceite (obrigatório)"
+      placeholder: |
+        - Dado ..., quando ..., então ...
+        - Dado ..., quando ..., então ...
+        - Dado ..., quando ..., então ...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: impactos_tecnicos
+    attributes:
+      label: "6) Impactos técnicos esperados"
+      options:
+        - label: "Front-end"
+        - label: "Back-end"
+        - label: "Banco de dados"
+        - label: "Documentação"
+        - label: "Arquitetura/ADR"
+        - label: "Sem impacto técnico relevante"
+
+  - type: textarea
+    id: dependencias
+    attributes:
+      label: "7) Dependências"
+      description: "APIs, outras tasks, decisões pendentes"
+
+  - type: textarea
+    id: riscos
+    attributes:
+      label: "8) Riscos"
+      description: "Riscos funcionais/técnicos"
+
+  - type: textarea
+    id: evidencias_referencias
+    attributes:
+      label: "9) Evidências/referências"
+      description: "Prints, links de protótipo, docs, benchmark"
+
+  - type: checkboxes
+    id: dor
+    attributes:
+      label: "10) Definição de pronto para iniciar (DoR)"
+      options:
+        - label: "Problema está claro"
+        - label: "Escopo está delimitado"
+        - label: "Critérios de aceite definidos"
+        - label: "Dependências mapeadas"
+        - label: "Sem ambiguidades críticas"

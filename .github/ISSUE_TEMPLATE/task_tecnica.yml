@@ -1,0 +1,88 @@
+name: Tarefa Técnica
+description: Atividade técnica sem entrega funcional direta ao usuário
+title: "chore: "
+labels:
+  - type:task
+  - status:triage
+assignees: []
+body:
+  - type: textarea
+    id: objetivo_tecnico
+    attributes:
+      label: 1) Objetivo técnico
+      description: "Ex.: refatoração, ajuste de estrutura, melhoria de pipeline."
+    validations:
+      required: true
+  - type: textarea
+    id: motivacao
+    attributes:
+      label: 2) Motivação
+      description: Por que essa tarefa é necessária agora?
+    validations:
+      required: true
+  - type: textarea
+    id: escopo_inclui
+    attributes:
+      label: 3) Escopo da tarefa — Inclui
+      placeholder: |
+        - ...
+        - ...
+    validations:
+      required: true
+  - type: textarea
+    id: escopo_nao_inclui
+    attributes:
+      label: 3) Escopo da tarefa — Não inclui
+      placeholder: |
+        - ...
+        - ...
+    validations:
+      required: true
+  - type: textarea
+    id: resultado_esperado
+    attributes:
+      label: 4) Resultado esperado
+      description: Estado técnico desejado após conclusão.
+    validations:
+      required: true
+  - type: checkboxes
+    id: impactos_tecnicos
+    attributes:
+      label: 5) Impactos técnicos
+      options:
+        - label: Código
+        - label: Banco de dados
+        - label: CI/CD
+        - label: Infraestrutura
+        - label: Documentação
+        - label: Arquitetura/ADR
+  - type: textarea
+    id: dependencias
+    attributes:
+      label: 6) Dependências
+      description: Outras tasks, aprovações, acesso.
+  - type: textarea
+    id: riscos_mitigacao
+    attributes:
+      label: 7) Riscos e mitigação
+      placeholder: |
+        Risco:
+        Mitigação:
+  - type: checkboxes
+    id: criterios_aceite
+    attributes:
+      label: 8) Critérios de aceite
+      options:
+        - label: Item técnico 1 concluído
+          required: true
+        - label: Item técnico 2 concluído
+          required: true
+        - label: Evidência técnica anexada
+          required: true
+        - label: Documentação atualizada
+          required: true
+  - type: textarea
+    id: evidencias
+    attributes:
+      label: 9) Evidências
+      description: Logs, before/after, métricas, prints.

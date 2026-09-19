@@ -3,10 +3,13 @@ import Image from "next/image";
 import logo from "@assets/logo_mais_arte.svg";
 import ExploreSection from "./explore-section";
 import brandType from "@/_utils/types/brandType";
+import FooterHero from "./hero";
 
 export default function Footer() {
 
-    const explorar = [
+    const ano = new Date().getFullYear();
+
+    const exploreLinks = [
         {
             text: "Eventos",
             linkUrl: "/eventos"
@@ -21,7 +24,7 @@ export default function Footer() {
         },
     ];
 
-    const participar = [
+    const participationLinks = [
         {
             text: "Criar evento",
             linkUrl: "/criarEvento"
@@ -36,7 +39,7 @@ export default function Footer() {
         },
     ];
 
-    const maisArte = [
+    const companyLinks = [
         {
             text: "Sobre",
             linkUrl: "/sobre"
@@ -50,37 +53,27 @@ export default function Footer() {
             linkUrl: "/privacidade"
         },
     ];
-
     return (
-
         <footer>
-
-            <section className="flex justify-between w-full h-fit py-8 bg-surface-inverse">
-                <Image
-                    src={logo}
-                    alt="Logo"
-                    className="aspect-square h-full w-32"
-                />
-                <div className="flex gap-8">
+            <FooterHero/>
+            <section className="h-fit py-8 bg-surface-inverse border-b-2 border-border-tertiary">
+                <div className="flex justify-between w-11/12 m-auto">
+                    <Image
+                        src={logo}
+                        alt="Mais Arte"
+                        className="aspect-square h-full w-32"
+                    />
                     <div className="flex gap-8 p-2.5">
-
-                        <ExploreSection title="Explorar" content={explorar} color={brandType.discovery} />
-                        <ExploreSection title="Participar" content={participar} color={brandType.community} />
-                        <ExploreSection title="+Arte" content={maisArte} color={brandType.culture} />
-
+                        <ExploreSection title="Explorar" content={exploreLinks} color={brandType.discovery} />
+                        <ExploreSection title="Participar" content={participationLinks} color={brandType.community} />
+                        <ExploreSection title="+Arte" content={companyLinks} color={brandType.culture} />
                     </div>
                 </div>
-
             </section>
-
-            <section className="w-full h-full px-4 bg-surface-inverse text-text-inverse">
+            <section className="py-4 bg-surface-inverse text-text-inverse">
                 <div className="flex justify-between w-11/12 m-auto">
-                    <div>
-                        <p>
-                            Mais Arte
-                        </p>
-                    </div>
-                    <div className="flex gap-4">
+                    <p>&copy; {ano} +Arte</p>
+                    <div className="flex gap-4 [&>]:hover:text-text-link-hover">
                         <Link href="/termos">
                             Termos
                         </Link>
@@ -90,9 +83,6 @@ export default function Footer() {
                     </div>
                 </div>
             </section>
-
         </footer>
-
     )
-
 }

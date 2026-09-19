@@ -13,7 +13,10 @@ interface exploreSectionProps {
 export default function ExploreSection(props: exploreSectionProps) {
     return (
         <div className="flex flex-col gap-2 p-2.5">
-            <p className={`text-lg text-brand-${props.color} font-semibold`}>
+            <p
+                className="text-lg font-semibold"
+                style={{ color: `var(--color-brand-${props.color})` }}
+            >
                 {props.title}
             </p>
             {

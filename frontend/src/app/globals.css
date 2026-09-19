@@ -63,7 +63,7 @@
   --surface-foreground-1: var(--color-slate-100);
   --surface-foreground-2: var(--color-slate-200);
   --surface-foreground-3: var(--color-slate-300);
-  --surface-inverse: var(--color-slate-900);
+  --surface-inverse: var(--color-neutral-900);
 
   --border-primary: var(--color-slate-200);
   --border-secondary: var(--color-slate-300);

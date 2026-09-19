@@ -18,7 +18,10 @@ export default function Navbar() {
           <NavItem texto="Espaços" link="/" />
         </span>
 
-        <AccountDropdown imageUrl="https://picsum.photos/100/100" />
+        <div>
+          
+          <AccountDropdown imageUrl="https://picsum.photos/100/100" />
+        </div>
 
       </div>
     </nav>

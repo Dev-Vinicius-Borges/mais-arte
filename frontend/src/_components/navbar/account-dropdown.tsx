@@ -12,10 +12,9 @@ export default function AccountDropdown(props: AccountDropdownProps) {
             <Image
                 src={props.imageUrl as string}
                 alt="Imagem"
-                width={40}
-                height={40}
-                className="rounded-full"
-                aspect-ratio="1/1"
+                width={32}
+                height={32}
+                className="rounded-full h-full min-size-8 aspect-square"
             />
         </div>
 

@@ -1,14 +1,16 @@
 import Image from "next/image";
+import hero from "@assets/footer_hero.svg"
 
 export default function FooterHero(){
 
     return(
-        <Image
-            src="@assets/footer_hero.svg"
-            alt="Hero"
-            width={100}
-            height={100}
-        />
+        <div className={`w-full`}>
+            <Image
+                src={hero}
+                alt="Hero"
+                className={`w-full`}
+            />
+        </div>
     )
 
 }

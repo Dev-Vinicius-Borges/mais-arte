@@ -18,7 +18,7 @@ export default function ExploreSection(props: exploreSectionProps) {
             </p>
             {
                 props.content.map((element, index) => (
-                    <Link key={index} className="text-text-inverse" href={element.linkUrl}>
+                    <Link key={index} className="text-text-inverse hover:text-text-link-hover" href={element.linkUrl}>
                         {element.text}
                     </Link>
                 ))

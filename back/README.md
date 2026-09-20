@@ -6,7 +6,7 @@ O backend do +Arte é a parte do projeto que conversa com o banco e entrega os d
 
 - API Fastify com TypeScript
 - Supabase conectado ao backend
-- Migration inicial do banco em `supabase/migrations/0001_mvp.sql`
+- Migrations do banco em `supabase/migrations/0001_mvp.sql` e `supabase/migrations/0002_ajustes_evento.sql`
 - Repositório Supabase usando as tabelas do MVP
 - Dados locais de fallback para desenvolvimento e testes
 - Validação de parâmetros com Zod
@@ -47,7 +47,9 @@ O arquivo `back/.env` já contém as configurações do projeto localmente. Esse
 
 A chave `SUPABASE_SERVICE_ROLE_KEY` é secreta. Ela deve ficar somente no backend, nunca no frontend.
 
-O schema inicial está em [`supabase/migrations/0001_mvp.sql`](supabase/migrations/0001_mvp.sql). Ele cria as tabelas:
+O schema inicial está em [`supabase/migrations/0001_mvp.sql`](supabase/migrations/0001_mvp.sql). Para quem já executou essa migration, também é necessário executar [`0002_ajustes_evento.sql`](supabase/migrations/0002_ajustes_evento.sql), que adiciona `foto_principal` à tabela `evento`.
+
+As migrations criam as tabelas:
 
 - `perfil_artista`
 - `banda`

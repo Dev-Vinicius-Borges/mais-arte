@@ -55,6 +55,7 @@ create table if not exists public.evento (
   data_moderacao timestamptz,
   observacoes_moderador text,
   url_cartaz varchar(255),
+  foto_principal varchar(255),
   link_ingresso varchar(255),
   reputacao_score double precision default 0 not null,
   ativo boolean default true not null,

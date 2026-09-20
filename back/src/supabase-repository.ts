@@ -4,6 +4,15 @@ import type { PlatformRepository } from "./repository.js";
 
 type DatabaseRow = Record<string, unknown>;
 
+const entityConfig: Record<EntityType, { table: string; idColumn: string }> = {
+  artista: { table: "perfil_artista", idColumn: "id_perfil_artista" },
+  banda: { table: "banda", idColumn: "id_banda" },
+  espaco_cultural: { table: "espaco_cultural", idColumn: "id_espaco_cultural" },
+  evento: { table: "evento", idColumn: "id_evento" }
+};
+
+const selectFor = (type: EntityType): string => type === "evento" ? "*, espaco_cultural(nome_espaco)" : "*";
+
 const asString = (value: unknown) => typeof value === "string" ? value : "";
 const asNullableString = (value: unknown) => typeof value === "string" ? value : null;
 const asNumber = (value: unknown) => typeof value === "number" ? value : Number(value ?? 0);
@@ -47,7 +56,7 @@ const toEvent = (row: DatabaseRow): Event => ({
   tipo_conteudo: "evento", id_evento: asString(row.id_evento), nome_evento: asString(row.nome_evento), descricao: asString(row.descricao),
   data_evento: asString(row.data_evento), hora_inicio: asString(row.hora_inicio), hora_fim: asNullableString(row.hora_fim), url_cartaz: asNullableString(row.url_cartaz),
   link_ingresso: asNullableString(row.link_ingresso), preco_ingresso: asNumber(row.preco_ingresso), fk_id_espaco_cultural: asString(row.fk_id_espaco_cultural),
-  nome_espaco: asString(row.nome_espaco), foto_principal: asNullableString(row.url_cartaz), reputacao_score: asNumber(row.reputacao_score), verificado: true, ativo: asBoolean(row.ativo)
+  nome_espaco: asString(row.nome_espaco ?? (row.espaco_cultural as DatabaseRow | null)?.nome_espaco), foto_principal: asNullableString(row.foto_principal), reputacao_score: asNumber(row.reputacao_score), verificado: asBoolean(row.verificado), ativo: asBoolean(row.ativo)
 });
 
 const escapeSearch = (value: string) => value.replace(/[%,_]/g, " ");
@@ -56,30 +65,31 @@ export class SupabasePlatformRepository implements PlatformRepository {
   public constructor(private readonly client: SupabaseClient) {}
 
   async list(type: EntityType) {
-    const table = tableName(type);
-    const { data, error } = await this.client.from(table).select("*").eq("ativo", true);
+    const { data, error } = await this.client.from(entityConfig[type].table).select(selectFor(type)).eq("ativo", true);
     if (error) throw error;
-    return (data ?? []).map((row) => mapRow(type, row));
+    return ((data ?? []) as unknown as DatabaseRow[]).map((row) => mapRow(type, row));
   }
 
   async findById(type: EntityType, id: string) {
-    const { data, error } = await this.client.from(tableName(type)).select("*").eq(idColumn(type), id).eq("ativo", true).maybeSingle();
+    const config = entityConfig[type];
+    const { data, error } = await this.client.from(config.table).select(selectFor(type)).eq(config.idColumn, id).eq("ativo", true).maybeSingle();
     if (error) throw error;
-    return data ? mapRow(type, data) : null;
+    return data ? mapRow(type, data as unknown as DatabaseRow) : null;
   }
 
   async create(input: EntityWrite) {
     const { tipo_conteudo: type, ...payload } = input;
-    const { data, error } = await this.client.from(tableName(type)).insert(stripId(type, payload)).select("*").single();
+    const { data, error } = await this.client.from(entityConfig[type].table).insert(stripId(type, payload)).select(selectFor(type)).single();
     if (error) throw error;
-    return mapRow(type, data);
+    return mapRow(type, data as unknown as DatabaseRow);
   }
 
   async update(type: EntityType, id: string, input: Partial<EntityWrite>) {
     const { tipo_conteudo: _ignoredType, ...payload } = input;
-    const { data, error } = await this.client.from(tableName(type)).update(stripId(type, payload)).eq(idColumn(type), id).select("*").maybeSingle();
+    const config = entityConfig[type];
+    const { data, error } = await this.client.from(config.table).update(stripId(type, payload)).eq(config.idColumn, id).select(selectFor(type)).maybeSingle();
     if (error) throw error;
-    return data ? mapRow(type, data) : null;
+    return data ? mapRow(type, data as unknown as DatabaseRow) : null;
   }
 
   async remove(type: EntityType, id: string) {
@@ -88,41 +98,37 @@ export class SupabasePlatformRepository implements PlatformRepository {
   }
 
   async findFeatured(type: EntityType, limit: number) {
-    const table = type === "artista" ? "perfil_artista" : type === "espaco_cultural" ? "espaco_cultural" : type;
-    const { data, error } = await this.client.from(table).select("*").eq("ativo", true).eq("verificado", true).limit(limit);
+    const { data, error } = await this.client.from(entityConfig[type].table).select(selectFor(type)).eq("ativo", true).eq("verificado", true).limit(limit);
     if (error) throw error;
-    return (data ?? []).map((row) => type === "artista" ? toArtist(row) : type === "espaco_cultural" ? toSpace(row) : type === "banda" ? toBand(row) : toEvent(row));
+    return ((data ?? []) as unknown as DatabaseRow[]).map((row) => type === "artista" ? toArtist(row) : type === "espaco_cultural" ? toSpace(row) : type === "banda" ? toBand(row) : toEvent(row));
   }
 
   async findUpcomingEvents(limit: number) {
     const today = new Date().toISOString().slice(0, 10);
-    const { data, error } = await this.client.from("evento").select("*").eq("ativo", true).gte("data_evento", today).order("data_evento", { ascending: true }).order("hora_inicio", { ascending: true }).limit(limit);
+    const { data, error } = await this.client.from("evento").select(selectFor("evento")).eq("ativo", true).gte("data_evento", today).order("data_evento", { ascending: true }).order("hora_inicio", { ascending: true }).limit(limit);
     if (error) throw error;
-    return (data ?? []).map(toEvent);
+    return ((data ?? []) as unknown as DatabaseRow[]).map(toEvent);
   }
 
   async search(query: string, type?: EntityType) {
     const term = escapeSearch(query.trim());
     const tables: EntityType[] = type ? [type] : ["artista", "banda", "evento", "espaco_cultural"];
     const results = await Promise.all(tables.map(async (currentType) => {
-      const table = currentType === "artista" ? "perfil_artista" : currentType;
+      const table = entityConfig[currentType].table;
       const nameColumn = currentType === "artista" ? "nome_artistico" : currentType === "banda" ? "nome_banda" : currentType === "evento" ? "nome_evento" : "nome_espaco";
       const descriptionColumn = currentType === "artista" ? "bio_profissional" : "descricao";
       const { data, error } = await this.client.from(table).select("*").eq("ativo", true).or(`${nameColumn}.ilike.%${term}%,${descriptionColumn}.ilike.%${term}%`).limit(20);
       if (error) throw error;
-      return (data ?? []).map((row) => currentType === "artista" ? toArtist(row) : currentType === "banda" ? toBand(row) : currentType === "evento" ? toEvent(row) : toSpace(row));
+      return ((data ?? []) as unknown as DatabaseRow[]).map((row) => mapRow(currentType, row));
     }));
 
     return results.flat().map((entity): SearchResult => ({ tipo_conteudo: entity.tipo_conteudo, id: entityId(entity), nome: entityName(entity), descricao: entity.descricao, score: entityName(entity).toLocaleLowerCase("pt-BR").includes(query.toLocaleLowerCase("pt-BR")) ? 2 : 1 }));
   }
 }
 
-const tableName = (type: EntityType) => type === "artista" ? "perfil_artista" : type;
-const idColumn = (type: EntityType) => `id_${type === "artista" ? "perfil_artista" : type}`;
-
 const stripId = (type: EntityType, payload: Record<string, unknown>) => {
   const copy = { ...payload };
-  delete copy[idColumn(type)];
+  delete copy[entityConfig[type].idColumn];
   return copy;
 };
 

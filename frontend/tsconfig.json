@@ -19,9 +19,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/_components/*"],
-      "@assets/*": ["./src/_assets/*"], 
+      "@root/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@utils/*" : ["./src/utils/*"],
+      "@types/*" : ["./src/types/*"],
+      "@contexts/*" : ["./src/contexts/*"]
     }
   },
   "include": [

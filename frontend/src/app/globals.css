@@ -42,6 +42,7 @@
   --color-brand-culture: var(--brand-red-primary);
   --color-brand-community: var(--brand-yellow-primary);
   --color-brand-structure: var(--brand-slate-primary);
+
 }
 
 :root {

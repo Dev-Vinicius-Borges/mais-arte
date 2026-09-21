@@ -1,11 +1,11 @@
 "use client";
 
-import Footer from "@/_components/footer/footer";
-import Navbar from "@/_components/navbar/navbar";
-import Card from "@/_components/searchbar/card";
-import SearchField from "@/_components/searchbar/input-search";
+import Footer from "@components/global/footer/footer";
+import Navbar from "@components/global/navbar/navbar";
+import Card from "@components/global/searchbar/card";
+import SearchField from "@components/global/searchbar/input-search";
 import { useState, type ChangeEvent } from "react";
-import FilterField from "@/_components/searchbar/input-filter";
+import FilterField from "@components/global/searchbar/input-filter";
 
 export default function Page() {
     const [search, setSearch] = useState<string>("");

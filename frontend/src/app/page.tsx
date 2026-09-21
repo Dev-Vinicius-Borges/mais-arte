@@ -1,13 +1,16 @@
-import Destaques from "@/_components/destaques/destaques";
-import Footer from "@/_components/footer/footer";
-import Navbar from "@/_components/navbar/navbar";
+import Highlights from "@components/pages/highlights/highlights";
+import Footer from "@components/global/footer/footer";
+import Navbar from "@components/global/navbar/navbar";
+import { CarouselStateProvider } from "@root/contexts/carousel/carouselContext";
 
 export default function Home() {
-  
+
   return (
     <>
       <Navbar />
-      <Destaques />
+      <CarouselStateProvider>
+        <Highlights />
+      </CarouselStateProvider>
       <Footer />
     </>
   );

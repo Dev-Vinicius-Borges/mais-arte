@@ -1,0 +1,4 @@
+node_modules/
+dist/
+.env
+GUIA_BACKEND_MVP.md

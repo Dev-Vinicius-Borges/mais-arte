@@ -33,7 +33,7 @@
   --color-alert-info: var(--alert-info);
   --color-alert-sucess: var(--alert-sucess);
   --color-alert-warning: var(--alert-warning);
-  
+
   --color-alert-danger: var(--alert-danger);
   --color-alert-danger-hover: var(--alert-danger-hover);
   --color-alert-danger-press: var(--alert-danger-press);
@@ -54,12 +54,8 @@
   --text-caption: var(--color-neutral-400);
   --text-link: var(--color-sky-600);
   --text-link-hover: var(--color-sky-700);
-<<<<<<< HEAD
   --text-inverse: var(--color-slate-50);
-=======
-  --text-inverse: var(--color-neutral-50);
 
->>>>>>> feature/3-pagina-inicial-estatica
   --text-success: var(--color-green-900);
   --text-warning: var(--color-amber-900);
   --text-danger: var(--color-red-900);
@@ -75,7 +71,7 @@
   --border-tertiary: var(--color-neutral-400);
   --border-input: var(--color-neutral-400);
 
-  --brand-violet-primary: var(--color-violet-600);
+  --brand-violet-primary: var(--color-purple-600);
   --brand-violet-hover: var(--color-violet-700);
   --brand-violet-press: var(--color-violet-800);
   --brand-violet-focus-ring: var(--color-violet-600);
@@ -102,27 +98,23 @@
   --alert-info: var(--color-sky-500);
   --alert-sucess: var(--color-green-500);
   --alert-warning: var(--color-amber-500);
-  
+
   --alert-danger: var(--color-red-500);
   --alert-danger-hover: var(--color-red-600);
   --alert-danger-press: var(--color-red-700);
 
-  --brand-violet-primary: var(--color-purple-600);
   --brand-violet-hover: var(--color-purple-700);
   --brand-violet-press: var(--color-purple-800);
   --brand-violet-focus-ring: var(--color-purple-600);
 
-  --brand-red-primary: var(--color-red-400);
   --brand-red-hover: var(--color-red-500);
   --brand-red-press: var(--color-red-600);
   --brand-red-focus-ring: var(--color-red-400);
 
-  --brand-slate-primary: var(--color-slate-700);
   --brand-slate-hover: var(--color-slate-800);
   --brand-slate-press: var(--color-slate-900);
   --brand-slate-focus-ring: var(--color-slate-700);
 
-  --brand-yellow-primary: var(--color-yellow-500);
   --brand-yellow-hover: var(--color-yellow-600);
   --brand-yellow-press: var(--color-yellow-700);
   --brand-yellow-focus-ring: var(--color-yellow-500);
@@ -137,7 +129,6 @@
   --text-caption: var(--color-slate-400);
   --text-link: var(--color-sky-500);
   --text-link-hover: var(--color-sky-600);
-  --text-inverse: var(--color-slate-950);
   --text-success: var(--color-green-800);
   --text-warning: var(--color-amber-800);
   --text-danger: var(--color-red-800);
@@ -149,17 +140,10 @@
   --surface-foreground-3: var(--color-slate-600);
   --surface-inverse: var(--color-neutral-50);
 
-<<<<<<< HEAD
-  --border-primary: var(--color-neutral-700);
-  --border-secondary: var(--color-neutral-300);
-  --border-tertiary: var(--color-neutral-400);
-  --border-input: var(--color-neutral-400);
-=======
   --border-primary: var(--color-slate-700);
   --border-secondary: var(--color-slate-600);
   --border-tertiary: var(--color-slate-500);
   --border-input: var(--color-slate-400);
->>>>>>> feature/3-pagina-inicial-estatica
 
   --alert-success-surface: var(--color-green-900);
   --alert-warning-surface: var(--color-amber-900);
@@ -168,7 +152,7 @@
   --alert-info: var(--color-sky-400);
   --alert-sucess: var(--color-green-400);
   --alert-warning: var(--color-amber-300);
-  
+
   --alert-danger: var(--color-red-400);
   --alert-danger-hover: var(--color-red-500);
   --alert-danger-press: var(--color-red-700);

@@ -4,6 +4,7 @@ O backend do +Arte é a parte do projeto que conversa com o banco e entrega os d
 
 ## O que já está pronto
 
+- Estrutura inicial Java 17 com Spring Boot, Hibernate/JPA e driver PostgreSQL (em preparação; o backend atual continua em TypeScript)
 - API Fastify com TypeScript
 - Supabase conectado ao backend
 - Migrations do banco em `supabase/migrations/`
@@ -14,6 +15,16 @@ O backend do +Arte é a parte do projeto que conversa com o banco e entrega os d
 - CORS configurado para o frontend local
 
 Quando `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` estão preenchidos no `.env`, o backend usa o Supabase automaticamente. Sem essas variáveis, ou usando os valores-placeholder do `.env.example`, ele usa os dados locais de teste.
+
+## Preparação do backend Java
+
+A migração está sendo feita por etapas. Nesta primeira etapa, o projeto Java e a configuração PostgreSQL coexistem com o backend TypeScript; nenhum endpoint foi migrado.
+
+Requisitos para compilar o projeto Java: JDK 17 e Maven 3.9 ou superior.
+
+Configure `DATABASE_URL`, `DATABASE_USERNAME` e `DATABASE_PASSWORD` no ambiente, usando `.env.example` como referência. Para PostgreSQL local, `DATABASE_URL` deve ser uma URL JDBC como `jdbc:postgresql://127.0.0.1:5432/mais_arte`. Não reutilize `SUPABASE_URL` como URL JDBC.
+
+Na pasta `back`, compile com `mvn test` e inicie a aplicação com `mvn spring-boot:run`. Nesta etapa, o Hibernate não cria nem valida tabelas (`ddl-auto: none`); o mapeamento do schema será habilitado quando as entidades forem migradas.
 
 ## Como executar
 

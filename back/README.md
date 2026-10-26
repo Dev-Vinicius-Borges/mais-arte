@@ -6,7 +6,7 @@ O backend do +Arte é a parte do projeto que conversa com o banco e entrega os d
 
 - API Fastify com TypeScript
 - Supabase conectado ao backend
-- Migrations do banco em `supabase/migrations/0001_mvp.sql` e `supabase/migrations/0002_ajustes_evento.sql`
+- Migrations do banco em `supabase/migrations/`
 - Repositório Supabase usando as tabelas do MVP
 - Dados locais de fallback para desenvolvimento e testes
 - Validação de parâmetros com Zod
@@ -47,7 +47,9 @@ O arquivo `back/.env` já contém as configurações do projeto localmente. Esse
 
 A chave `SUPABASE_SERVICE_ROLE_KEY` é secreta. Ela deve ficar somente no backend, nunca no frontend.
 
-O schema inicial está em [`supabase/migrations/0001_mvp.sql`](supabase/migrations/0001_mvp.sql). Para quem já executou essa migration, também é necessário executar [`0002_ajustes_evento.sql`](supabase/migrations/0002_ajustes_evento.sql), que adiciona `foto_principal` à tabela `evento`.
+O schema inicial está em [`supabase/migrations/0001_mvp.sql`](supabase/migrations/0001_mvp.sql). Para quem já executou a migration inicial, também é necessário executar [`0002_ajustes_evento.sql`](supabase/migrations/0002_ajustes_evento.sql), que adiciona `foto_principal` à tabela `evento`, e [`0003_endereco_evento_espacos.sql`](supabase/migrations/0003_endereco_evento_espacos.sql), que normaliza endereços e associa eventos a nenhum ou vários espaços culturais.
+
+Antes de aplicar `0003`, preencha o endereço dos espaços culturais associados aos eventos existentes. A migration interrompe com erro se não puder preservar o endereço de algum evento.
 
 As migrations criam as tabelas:
 
@@ -55,6 +57,10 @@ As migrations criam as tabelas:
 - `banda`
 - `espaco_cultural`
 - `evento`
+- `endereco`
+- `evento_espaco_cultural`
+
+O cadastro do evento recebe o endereço estruturado (CEP opcional) e a lista `ids_espacos_culturais`, que pode ficar vazia. Endereços são reutilizados pela chave normalizada; nesta etapa não há integração automática com Correios ou IBGE.
 
 O arquivo `modelo_fisico.sql` continua sendo a referência conceitual do domínio, mas foi escrito para MySQL. A migration usada no Supabase está em PostgreSQL.
 

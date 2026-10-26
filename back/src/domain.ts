@@ -36,6 +36,17 @@ export interface Space extends BaseEntity {
   endereco: string | null;
 }
 
+export interface Address {
+  cep: string | null;
+  logradouro: string;
+  numero: string | null;
+  complemento: string | null;
+  bairro: string | null;
+  cidade: string | null;
+  uf: string | null;
+  ponto_referencia: string | null;
+}
+
 export interface Event extends BaseEntity {
   tipo_conteudo: "evento";
   id_evento: string;
@@ -46,13 +57,23 @@ export interface Event extends BaseEntity {
   url_cartaz: string | null;
   link_ingresso: string | null;
   preco_ingresso: number;
-  fk_id_espaco_cultural: string;
-  nome_espaco: string;
+  endereco: Address;
+  espacos_culturais: Space[];
 }
 
 export type PlatformEntity = Artist | Band | Space | Event;
 
-export type EntityWrite = Partial<PlatformEntity> & { tipo_conteudo: EntityType };
+export type EventWrite = Partial<Omit<Event, "tipo_conteudo" | "id_evento" | "espacos_culturais">> & {
+  tipo_conteudo: "evento";
+  endereco: Address;
+  ids_espacos_culturais?: string[];
+};
+
+export type EntityWrite =
+  | (Partial<Artist> & { tipo_conteudo: "artista" })
+  | (Partial<Band> & { tipo_conteudo: "banda" })
+  | (Partial<Space> & { tipo_conteudo: "espaco_cultural" })
+  | EventWrite;
 
 export interface SearchResult {
   tipo_conteudo: EntityType;

@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { EntityType, EntityWrite, Event, PlatformEntity, SearchResult } from "./domain.js";
+import type { Address, EntityType, EntityWrite, Event, PlatformEntity, SearchResult, Space } from "./domain.js";
 import type { PlatformRepository } from "./repository.js";
 
 type DatabaseRow = Record<string, unknown>;
@@ -11,12 +11,35 @@ const entityConfig: Record<EntityType, { table: string; idColumn: string }> = {
   evento: { table: "evento", idColumn: "id_evento" }
 };
 
-const selectFor = (type: EntityType): string => type === "evento" ? "*, espaco_cultural(nome_espaco)" : "*";
+const selectFor = (type: EntityType): string => type === "evento"
+  ? "*, endereco(*), evento_espaco_cultural(espaco_cultural(*))"
+  : "*";
 
 const asString = (value: unknown) => typeof value === "string" ? value : "";
 const asNullableString = (value: unknown) => typeof value === "string" ? value : null;
 const asNumber = (value: unknown) => typeof value === "number" ? value : Number(value ?? 0);
 const asBoolean = (value: unknown) => value === true || value === 1;
+
+const addressKey = (address: Address) => [
+  address.cep ?? "",
+  address.logradouro,
+  address.numero ?? "",
+  address.complemento ?? "",
+  address.bairro ?? "",
+  address.cidade ?? "",
+  address.uf ?? ""
+].map((part) => part.trim().replace(/\s+/g, " ").toLocaleLowerCase("pt-BR")).join("|");
+
+const toAddress = (row: DatabaseRow): Address => ({
+  cep: asNullableString(row.cep),
+  logradouro: asString(row.logradouro),
+  numero: asNullableString(row.numero),
+  complemento: asNullableString(row.complemento),
+  bairro: asNullableString(row.bairro),
+  cidade: asNullableString(row.cidade),
+  uf: asNullableString(row.uf),
+  ponto_referencia: asNullableString(row.ponto_referencia)
+});
 
 const entityName = (entity: PlatformEntity) => {
   if (entity.tipo_conteudo === "artista") return entity.nome_artistico ?? "";
@@ -52,12 +75,21 @@ const toSpace = (row: DatabaseRow): PlatformEntity => ({
   reputacao_score: asNumber(row.reputacao_score), verificado: asBoolean(row.verificado), ativo: asBoolean(row.ativo)
 });
 
-const toEvent = (row: DatabaseRow): Event => ({
-  tipo_conteudo: "evento", id_evento: asString(row.id_evento), nome_evento: asString(row.nome_evento), descricao: asString(row.descricao),
-  data_evento: asString(row.data_evento), hora_inicio: asString(row.hora_inicio), hora_fim: asNullableString(row.hora_fim), url_cartaz: asNullableString(row.url_cartaz),
-  link_ingresso: asNullableString(row.link_ingresso), preco_ingresso: asNumber(row.preco_ingresso), fk_id_espaco_cultural: asString(row.fk_id_espaco_cultural),
-  nome_espaco: asString(row.nome_espaco ?? (row.espaco_cultural as DatabaseRow | null)?.nome_espaco), foto_principal: asNullableString(row.foto_principal), reputacao_score: asNumber(row.reputacao_score), verificado: asBoolean(row.verificado), ativo: asBoolean(row.ativo)
-});
+const toEvent = (row: DatabaseRow): Event => {
+  if (!row.endereco) throw new Error(`Evento ${asString(row.id_evento)} retornado sem endereço associado.`);
+  const linkedSpaces = ((row.evento_espaco_cultural ?? []) as DatabaseRow[]).flatMap((link) => {
+    const space = link.espaco_cultural as DatabaseRow | null;
+    return space ? [toSpace(space) as Space] : [];
+  });
+  return {
+    tipo_conteudo: "evento", id_evento: asString(row.id_evento), nome_evento: asString(row.nome_evento), descricao: asString(row.descricao),
+    data_evento: asString(row.data_evento), hora_inicio: asString(row.hora_inicio), hora_fim: asNullableString(row.hora_fim), url_cartaz: asNullableString(row.url_cartaz),
+    link_ingresso: asNullableString(row.link_ingresso), preco_ingresso: asNumber(row.preco_ingresso),
+    endereco: toAddress(row.endereco as DatabaseRow),
+    espacos_culturais: linkedSpaces,
+    foto_principal: asNullableString(row.foto_principal), reputacao_score: asNumber(row.reputacao_score), verificado: asBoolean(row.verificado), ativo: asBoolean(row.ativo)
+  };
+};
 
 const escapeSearch = (value: string) => value.replace(/[%,_]/g, " ");
 
@@ -79,6 +111,7 @@ export class SupabasePlatformRepository implements PlatformRepository {
 
   async create(input: EntityWrite) {
     const { tipo_conteudo: type, ...payload } = input;
+    if (type === "evento") return this.createEvent(payload as Record<string, unknown>);
     const { data, error } = await this.client.from(entityConfig[type].table).insert(stripId(type, payload)).select(selectFor(type)).single();
     if (error) throw error;
     return mapRow(type, data as unknown as DatabaseRow);
@@ -86,6 +119,7 @@ export class SupabasePlatformRepository implements PlatformRepository {
 
   async update(type: EntityType, id: string, input: Partial<EntityWrite>) {
     const { tipo_conteudo: _ignoredType, ...payload } = input;
+    if (type === "evento") return this.updateEvent(id, payload as Record<string, unknown>);
     const config = entityConfig[type];
     const { data, error } = await this.client.from(config.table).update(stripId(type, payload)).eq(config.idColumn, id).select(selectFor(type)).maybeSingle();
     if (error) throw error;
@@ -117,12 +151,81 @@ export class SupabasePlatformRepository implements PlatformRepository {
       const table = entityConfig[currentType].table;
       const nameColumn = currentType === "artista" ? "nome_artistico" : currentType === "banda" ? "nome_banda" : currentType === "evento" ? "nome_evento" : "nome_espaco";
       const descriptionColumn = currentType === "artista" ? "bio_profissional" : "descricao";
-      const { data, error } = await this.client.from(table).select("*").eq("ativo", true).or(`${nameColumn}.ilike.%${term}%,${descriptionColumn}.ilike.%${term}%`).limit(20);
+      const { data, error } = await this.client.from(table).select(selectFor(currentType)).eq("ativo", true).or(`${nameColumn}.ilike.%${term}%,${descriptionColumn}.ilike.%${term}%`).limit(20);
       if (error) throw error;
       return ((data ?? []) as unknown as DatabaseRow[]).map((row) => mapRow(currentType, row));
     }));
 
     return results.flat().map((entity): SearchResult => ({ tipo_conteudo: entity.tipo_conteudo, id: entityId(entity), nome: entityName(entity), descricao: entity.descricao, score: entityName(entity).toLocaleLowerCase("pt-BR").includes(query.toLocaleLowerCase("pt-BR")) ? 2 : 1 }));
+  }
+
+  private async ensureAddress(address: Address) {
+    const { data, error } = await this.client.from("endereco").upsert({
+      ...address,
+      chave_normalizada: addressKey(address),
+      cep: address.cep?.replace(/\D/g, "") ?? null,
+      uf: address.uf?.toUpperCase() ?? null
+    }, { onConflict: "chave_normalizada" }).select("id_endereco").single();
+    if (error) throw error;
+    return asString(data.id_endereco);
+  }
+
+  private async createEvent(payload: Record<string, unknown>) {
+    const { endereco, ids_espacos_culturais, ...eventFields } = payload;
+    const idEndereco = await this.ensureAddress(endereco as Address);
+    const { data: created, error: createError } = await this.client.from("evento")
+      .insert({ ...eventFields, fk_id_endereco: idEndereco })
+      .select("id_evento")
+      .single();
+    if (createError) throw createError;
+
+    const idEvento = asString(created.id_evento);
+    await this.replaceEventSpaces(idEvento, ids_espacos_culturais as string[] | undefined);
+    const saved = await this.getEventRow(idEvento);
+    if (!saved) throw new Error(`Evento ${idEvento} foi criado, mas não pôde ser recuperado.`);
+    return saved;
+  }
+
+  private async updateEvent(id: string, payload: Record<string, unknown>) {
+    const current = await this.getEventRow(id);
+    if (!current) return null;
+
+    const { endereco, ids_espacos_culturais, ...eventFields } = payload;
+    const updateFields = { ...eventFields };
+    if (endereco) updateFields.fk_id_endereco = await this.ensureAddress(endereco as Address);
+
+    if (Object.keys(updateFields).length > 0) {
+      const { error } = await this.client.from("evento")
+        .update(stripId("evento", updateFields))
+        .eq("id_evento", id);
+      if (error) throw error;
+    }
+    if (ids_espacos_culturais !== undefined) {
+      await this.replaceEventSpaces(id, ids_espacos_culturais as string[]);
+    }
+    return this.getEventRow(id);
+  }
+
+  private async replaceEventSpaces(eventId: string, ids: string[] = []) {
+    const { error: deleteError } = await this.client.from("evento_espaco_cultural")
+      .delete()
+      .eq("id_evento", eventId);
+    if (deleteError) throw deleteError;
+
+    if (ids.length === 0) return;
+    const { error } = await this.client.from("evento_espaco_cultural").insert(
+      [...new Set(ids)].map((id) => ({ id_evento: eventId, id_espaco_cultural: id }))
+    );
+    if (error) throw error;
+  }
+
+  private async getEventRow(id: string) {
+    const { data, error } = await this.client.from("evento")
+      .select(selectFor("evento"))
+      .eq("id_evento", id)
+      .maybeSingle();
+    if (error) throw error;
+    return data ? toEvent(data as unknown as DatabaseRow) : null;
   }
 }
 

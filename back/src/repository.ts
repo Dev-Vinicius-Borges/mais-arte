@@ -17,7 +17,10 @@ const searchableText = (entity: PlatformEntity) => {
   if (entity.tipo_conteudo === "artista") fields.push(entity.nome_artistico ?? "", entity.bio_profissional ?? "", ...entity.generos_musicais);
   if (entity.tipo_conteudo === "banda") fields.push(entity.nome_banda, ...entity.generos_musicais);
   if (entity.tipo_conteudo === "espaco_cultural") fields.push(entity.nome_espaco, entity.endereco ?? "");
-  if (entity.tipo_conteudo === "evento") fields.push(entity.nome_evento, entity.nome_espaco);
+  if (entity.tipo_conteudo === "evento") {
+    fields.push(entity.nome_evento, entity.endereco.logradouro, entity.endereco.bairro ?? "", entity.endereco.cidade ?? "");
+    fields.push(...entity.espacos_culturais.map((space) => space.nome_espaco));
+  }
 
   return fields.join(" ").toLocaleLowerCase("pt-BR");
 };
@@ -41,7 +44,13 @@ export class InMemoryPlatformRepository implements PlatformRepository {
   }
 
   async create(input: EntityWrite) {
-    const entity = { ...input, ...this.generatedFields(input) } as PlatformEntity;
+    if (input.tipo_conteudo === "evento" && !input.endereco.logradouro.trim()) {
+      throw new Error("O evento precisa de um endereço.");
+    }
+    const persistedInput = input.tipo_conteudo === "evento"
+      ? (({ ids_espacos_culturais: _ids, ...eventFields }) => eventFields)(input)
+      : input;
+    const entity = { ...persistedInput, ...this.generatedFields(input) } as PlatformEntity;
     this.items.push(entity);
     return entity;
   }
@@ -49,7 +58,19 @@ export class InMemoryPlatformRepository implements PlatformRepository {
   async update(type: EntityType, id: string, input: Partial<EntityWrite>) {
     const index = this.items.findIndex((item) => item.tipo_conteudo === type && this.entityId(item) === id);
     if (index < 0) return null;
-    const updated = { ...this.items[index], ...input, tipo_conteudo: type } as PlatformEntity;
+    const linkedIds = "ids_espacos_culturais" in input ? input.ids_espacos_culturais : undefined;
+    const fields = { ...input };
+    if ("ids_espacos_culturais" in fields) delete fields.ids_espacos_culturais;
+    const current = this.items[index];
+    if (!current) return null;
+    const updated = {
+      ...current,
+      ...fields,
+      ...(type === "evento" && current.tipo_conteudo === "evento" && linkedIds !== undefined
+        ? { espacos_culturais: this.resolveSpaces(linkedIds) }
+        : {}),
+      tipo_conteudo: type
+    } as PlatformEntity;
     this.items[index] = updated;
     return updated;
   }
@@ -93,6 +114,18 @@ export class InMemoryPlatformRepository implements PlatformRepository {
     if (input.tipo_conteudo === "artista") return { ...common, id_perfil_artista: nextId, nome_artistico: input.nome_artistico ?? null, bio_profissional: input.bio_profissional ?? null, data_inicio_atividade: input.data_inicio_atividade ?? null, generos_musicais: input.generos_musicais ?? [] };
     if (input.tipo_conteudo === "banda") return { ...common, id_banda: nextId, nome_banda: input.nome_banda ?? "", data_formacao: input.data_formacao ?? "", generos_musicais: input.generos_musicais ?? [] };
     if (input.tipo_conteudo === "espaco_cultural") return { ...common, id_espaco_cultural: nextId, nome_espaco: input.nome_espaco ?? "", site: input.site ?? null, horario_funcionamento: input.horario_funcionamento ?? {}, capacidade_maxima: input.capacidade_maxima ?? null, publico: input.publico ?? true, endereco: input.endereco ?? null };
-    return { ...common, id_evento: nextId, nome_evento: input.nome_evento ?? "", data_evento: input.data_evento ?? "", hora_inicio: input.hora_inicio ?? "", hora_fim: input.hora_fim ?? null, url_cartaz: input.url_cartaz ?? null, link_ingresso: input.link_ingresso ?? null, preco_ingresso: input.preco_ingresso ?? 0, fk_id_espaco_cultural: input.fk_id_espaco_cultural ?? "", nome_espaco: input.nome_espaco ?? "" };
+    const linkedSpaces = this.resolveSpaces(input.ids_espacos_culturais ?? []);
+    return { ...common, id_evento: nextId, nome_evento: input.nome_evento ?? "", data_evento: input.data_evento ?? "", hora_inicio: input.hora_inicio ?? "", hora_fim: input.hora_fim ?? null, url_cartaz: input.url_cartaz ?? null, link_ingresso: input.link_ingresso ?? null, preco_ingresso: input.preco_ingresso ?? 0, endereco: input.endereco ?? { cep: null, logradouro: "", numero: null, complemento: null, bairro: null, cidade: null, uf: null, ponto_referencia: null }, espacos_culturais: linkedSpaces };
+  }
+
+  private resolveSpaces(ids: string[]) {
+    const uniqueIds = [...new Set(ids)];
+    const spaces = this.items.filter((item): item is Extract<PlatformEntity, { tipo_conteudo: "espaco_cultural" }> =>
+      item.tipo_conteudo === "espaco_cultural" && uniqueIds.includes(item.id_espaco_cultural)
+    );
+    if (spaces.length !== uniqueIds.length) {
+      throw new Error("Um ou mais espaços culturais não foram encontrados.");
+    }
+    return spaces;
   }
 }

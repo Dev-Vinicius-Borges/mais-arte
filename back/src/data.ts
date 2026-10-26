@@ -1,31 +1,43 @@
-import type { PlatformEntity } from "./domain.js";
+import type { Address, PlatformEntity, Space } from "./domain.js";
 
 const image = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=80`;
+const address = (logradouro: string, numero: string, bairro: string): Address => ({
+  cep: null, logradouro, numero, complemento: null, bairro, cidade: "Curitiba", uf: "PR", ponto_referencia: null
+});
+const eventSpace = (id: string, nome: string): Space => ({
+  tipo_conteudo: "espaco_cultural", id_espaco_cultural: id, nome_espaco: nome, descricao: "",
+  foto_principal: null, reputacao_score: 0, verificado: true, ativo: true, site: null,
+  horario_funcionamento: {}, capacidade_maxima: null, publico: true, endereco: null
+});
 
 export const entities: PlatformEntity[] = [
   {
     tipo_conteudo: "evento", id_evento: "1", nome_evento: "Festival de Inverno +Arte",
     descricao: "Dois dias de música, arte visual e gastronomia local.", foto_principal: image("photo-1492684223066-81342ee5ff30"),
-    reputacao_score: 4.8, verificado: true, ativo: true, data_evento: "2026-10-03", hora_inicio: "15:00:00", hora_fim: "23:00:00",
-    url_cartaz: null, link_ingresso: null, preco_ingresso: 35, fk_id_espaco_cultural: "1", nome_espaco: "Pátio das Artes"
+    reputacao_score: 4.8, verificado: true, ativo: true, data_evento: "2027-10-03", hora_inicio: "15:00:00", hora_fim: "23:00:00",
+    url_cartaz: null, link_ingresso: null, preco_ingresso: 35,
+    endereco: address("Rua das Flores", "120", "Centro"), espacos_culturais: [eventSpace("1", "Pátio das Artes")]
   },
   {
     tipo_conteudo: "evento", id_evento: "2", nome_evento: "Noite Jazz no Paço",
     descricao: "Improviso e clássicos do jazz em uma noite intimista.", foto_principal: image("photo-1511192336575-5a79af67a629"),
-    reputacao_score: 4.7, verificado: true, ativo: true, data_evento: "2026-10-09", hora_inicio: "20:00:00", hora_fim: "23:30:00",
-    url_cartaz: null, link_ingresso: null, preco_ingresso: 25, fk_id_espaco_cultural: "2", nome_espaco: "Paço da Liberdade"
+    reputacao_score: 4.7, verificado: true, ativo: true, data_evento: "2027-10-09", hora_inicio: "20:00:00", hora_fim: "23:30:00",
+    url_cartaz: null, link_ingresso: null, preco_ingresso: 25,
+    endereco: address("Praça Generoso Marques", "189", "Centro"), espacos_culturais: [eventSpace("2", "Paço da Liberdade")]
   },
   {
     tipo_conteudo: "evento", id_evento: "3", nome_evento: "Feira Gráfica Independente",
     descricao: "Publicações, impressos e encontros com artistas gráficos.", foto_principal: image("photo-1544816155-12df9643f363"),
-    reputacao_score: 4.5, verificado: true, ativo: true, data_evento: "2026-10-17", hora_inicio: "11:00:00", hora_fim: "18:00:00",
-    url_cartaz: null, link_ingresso: null, preco_ingresso: 0, fk_id_espaco_cultural: "3", nome_espaco: "Casa Hoffmann"
+    reputacao_score: 4.5, verificado: true, ativo: true, data_evento: "2027-10-17", hora_inicio: "11:00:00", hora_fim: "18:00:00",
+    url_cartaz: null, link_ingresso: null, preco_ingresso: 0,
+    endereco: address("Rua Claudino dos Santos", "58", "São Francisco"), espacos_culturais: [eventSpace("3", "Casa Hoffmann")]
   },
   {
     tipo_conteudo: "evento", id_evento: "4", nome_evento: "Dança na Praça",
     descricao: "Apresentações e oficinas abertas para todos os públicos.", foto_principal: image("photo-1504609813442-a8924e83f76e"),
-    reputacao_score: 4.4, verificado: true, ativo: true, data_evento: "2026-10-24", hora_inicio: "14:00:00", hora_fim: "19:00:00",
-    url_cartaz: null, link_ingresso: null, preco_ingresso: 0, fk_id_espaco_cultural: "4", nome_espaco: "Estação 31"
+    reputacao_score: 4.4, verificado: true, ativo: true, data_evento: "2027-10-24", hora_inicio: "14:00:00", hora_fim: "19:00:00",
+    url_cartaz: null, link_ingresso: null, preco_ingresso: 0,
+    endereco: address("Rua 31 de Março", "80", "Rebouças"), espacos_culturais: [eventSpace("4", "Estação 31")]
   },
   {
     tipo_conteudo: "artista", id_perfil_artista: "1", nome_artistico: "Lia Faria",

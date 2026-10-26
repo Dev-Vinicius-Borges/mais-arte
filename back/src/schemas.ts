@@ -7,6 +7,17 @@ export const searchSchema = z.object({
   type: z.enum(["artista", "banda", "evento", "espaco_cultural"]).optional()
 });
 
+const addressSchema = z.object({
+  cep: z.string().regex(/^\d{8}$/).nullable().optional(),
+  logradouro: z.string().trim().min(2).max(255),
+  numero: z.string().trim().max(30).nullable().optional(),
+  complemento: z.string().trim().max(255).nullable().optional(),
+  bairro: z.string().trim().max(150).nullable().optional(),
+  cidade: z.string().trim().min(2).max(150),
+  uf: z.string().trim().regex(/^[A-Za-z]{2}$/).transform((value) => value.toUpperCase()),
+  ponto_referencia: z.string().trim().max(500).nullable().optional()
+});
+
 export const writeSchemas = {
   artista: z.object({
     nome_artistico: z.string().min(2).max(150),
@@ -41,7 +52,8 @@ export const writeSchemas = {
     url_cartaz: z.string().url().nullable().optional(),
     link_ingresso: z.string().url().nullable().optional(),
     preco_ingresso: z.number().nonnegative().default(0),
-    fk_id_espaco_cultural: z.coerce.string().min(1),
+    endereco: addressSchema,
+    ids_espacos_culturais: z.array(z.coerce.string().regex(/^\d+$/)).default([]),
     foto_principal: z.string().url().nullable().optional()
   })
 };

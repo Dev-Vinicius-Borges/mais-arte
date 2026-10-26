@@ -73,3 +73,53 @@ test("creates, reads, updates and deactivates an artist", async () => {
   assert.equal(missing.statusCode, 404);
   await app.close();
 });
+
+test("creates street events without a cultural space and events linked to multiple spaces", async () => {
+  const app = buildApp();
+  const baseEvent = {
+    nome_evento: "Batalha de Rima",
+    descricao: "Encontro aberto de rima na praça.",
+    data_evento: "2027-02-10",
+    hora_inicio: "19:00",
+    endereco: {
+      logradouro: "Praça Rui Barbosa",
+      numero: "s/n",
+      bairro: "Centro",
+      cidade: "Curitiba",
+      uf: "PR"
+    }
+  };
+
+  const streetEvent = await app.inject({
+    method: "POST",
+    url: "/api/v1/events",
+    payload: baseEvent
+  });
+  assert.equal(streetEvent.statusCode, 201);
+  const streetBody = JSON.parse(streetEvent.body).data;
+  assert.equal(streetBody.endereco.logradouro, "Praça Rui Barbosa");
+  assert.deepEqual(streetBody.espacos_culturais, []);
+
+  const linkedEvent = await app.inject({
+    method: "POST",
+    url: "/api/v1/events",
+    payload: {
+      ...baseEvent,
+      nome_evento: "Encontro Multicultural",
+      ids_espacos_culturais: ["1", "2"]
+    }
+  });
+  assert.equal(linkedEvent.statusCode, 201);
+  assert.deepEqual(
+    JSON.parse(linkedEvent.body).data.espacos_culturais.map((space: { id_espaco_cultural: string }) => space.id_espaco_cultural),
+    ["1", "2"]
+  );
+
+  const invalidAddress = await app.inject({
+    method: "POST",
+    url: "/api/v1/events",
+    payload: { ...baseEvent, endereco: { logradouro: "Rua sem cidade" } }
+  });
+  assert.equal(invalidAddress.statusCode, 400);
+  await app.close();
+});

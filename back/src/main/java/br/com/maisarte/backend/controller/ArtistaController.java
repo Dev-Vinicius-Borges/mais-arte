@@ -35,7 +35,7 @@ public class ArtistaController {
     @GetMapping("/{id}")
     public ArtistaDto buscarPorId(@PathVariable Long id) {
         return ArtistaDto.fromEntity(servico.buscarAtivoPorId(id));
-    }
+    } //não retorna o motter foquer 
 
     @GetMapping("/destaques")
     public List<ArtistaDto> destaques(@RequestParam(defaultValue = "10") int limite) {

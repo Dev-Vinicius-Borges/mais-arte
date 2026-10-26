@@ -33,6 +33,8 @@ public class Artista extends EntidadeConteudoBase {
     @Column(name = "generos_musicais", columnDefinition = "jsonb", nullable = false)
     private List<String> generosMusicais = new ArrayList<>();
 
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public Long getIdentificador() { return id; }
     public String getNomeArtistico() { return nomeArtistico; }
     public void setNomeArtistico(String nomeArtistico) { this.nomeArtistico = nomeArtistico; }

@@ -47,6 +47,8 @@ public class EspacoCultural extends EntidadeConteudoBase {
     @ManyToMany(mappedBy = "espacosCulturais")
     private Set<Evento> eventos = new LinkedHashSet<>();
 
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public Long getIdentificador() { return id; }
     public String getNomeEspaco() { return nomeEspaco; }
     public void setNomeEspaco(String nomeEspaco) { this.nomeEspaco = nomeEspaco; }

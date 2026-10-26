@@ -61,6 +61,8 @@ public class Evento extends EntidadeConteudoBase {
             inverseJoinColumns = @JoinColumn(name = "id_espaco_cultural"))
     private Set<EspacoCultural> espacosCulturais = new LinkedHashSet<>();
 
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public Long getIdentificador() { return id; }
     public String getNomeEvento() { return nomeEvento; }
     public void setNomeEvento(String nomeEvento) { this.nomeEvento = nomeEvento; }

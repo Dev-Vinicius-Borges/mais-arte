@@ -18,7 +18,7 @@ Quando `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` estão preenchidos no `.env`
 
 ## Preparação do backend Java
 
-A migração está sendo feita por etapas. As entidades JPA do domínio estão sendo adicionadas em paralelo ao backend TypeScript; nenhum endpoint foi migrado.
+A migração está sendo feita por etapas. As entidades JPA, repositórios e serviços do domínio estão sendo adicionados em paralelo ao backend TypeScript; nenhum endpoint foi migrado. Os repositórios ficam no pacote `br.com.maisarte.backend.repositorio` e usam `JpaRepository`; o de endereço também permite localizar um registro pela chave normalizada. `EnderecoServico` normaliza os dados, reutiliza endereços existentes ou cadastra novos. `EventoServico` exige e resolve esse endereço antes de persistir o evento, na mesma transação.
 
 Requisitos para compilar o projeto Java: JDK 17 e Maven 3.9 ou superior.
 

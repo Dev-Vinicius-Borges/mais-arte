@@ -18,13 +18,13 @@ Quando `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` estão preenchidos no `.env`
 
 ## Preparação do backend Java
 
-A migração está sendo feita por etapas. Nesta primeira etapa, o projeto Java e a configuração PostgreSQL coexistem com o backend TypeScript; nenhum endpoint foi migrado.
+A migração está sendo feita por etapas. As entidades JPA do domínio estão sendo adicionadas em paralelo ao backend TypeScript; nenhum endpoint foi migrado.
 
 Requisitos para compilar o projeto Java: JDK 17 e Maven 3.9 ou superior.
 
 Configure `DATABASE_URL`, `DATABASE_USERNAME` e `DATABASE_PASSWORD` no ambiente, usando `.env.example` como referência. Para PostgreSQL local, `DATABASE_URL` deve ser uma URL JDBC como `jdbc:postgresql://127.0.0.1:5432/mais_arte`. Não reutilize `SUPABASE_URL` como URL JDBC.
 
-Na pasta `back`, compile com `mvn test` e inicie a aplicação com `mvn spring-boot:run`. Nesta etapa, o Hibernate não cria nem valida tabelas (`ddl-auto: none`); o mapeamento do schema será habilitado quando as entidades forem migradas.
+Na pasta `back`, compile com `mvn test` e inicie a aplicação com `mvn spring-boot:run`. O Hibernate valida o schema (`ddl-auto: validate`) sem criar ou alterar tabelas; aplique as migrations antes de iniciar.
 
 ## Como executar
 
@@ -58,7 +58,7 @@ O arquivo `back/.env` já contém as configurações do projeto localmente. Esse
 
 A chave `SUPABASE_SERVICE_ROLE_KEY` é secreta. Ela deve ficar somente no backend, nunca no frontend.
 
-O schema inicial está em [`supabase/migrations/0001_mvp.sql`](supabase/migrations/0001_mvp.sql). Para quem já executou a migration inicial, também é necessário executar [`0002_ajustes_evento.sql`](supabase/migrations/0002_ajustes_evento.sql), que adiciona `foto_principal` à tabela `evento`, e [`0003_endereco_evento_espacos.sql`](supabase/migrations/0003_endereco_evento_espacos.sql), que normaliza endereços e associa eventos a nenhum ou vários espaços culturais.
+O schema inicial está em [`supabase/migrations/0001_mvp.sql`](supabase/migrations/0001_mvp.sql). Execute também, nesta ordem, [`0002_ajustes_evento.sql`](supabase/migrations/0002_ajustes_evento.sql), [`0003_endereco_evento_espacos.sql`](supabase/migrations/0003_endereco_evento_espacos.sql) e [`0004_ajustes_espaco_cultural.sql`](supabase/migrations/0004_ajustes_espaco_cultural.sql). Elas completam o schema, normalizam endereços, associam eventos a nenhum ou vários espaços e alinham as colunas da entidade de espaço.
 
 Antes de aplicar `0003`, preencha o endereço dos espaços culturais associados aos eventos existentes. A migration interrompe com erro se não puder preservar o endereço de algum evento.
 

@@ -14,17 +14,17 @@ import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "perfil_artista", schema = "public")
-public class Artista extends ConteudoBase {
+public class Artista extends EntidadeConteudoBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_perfil_artista")
-    private Long identificador;
+    private Long id;
 
     @Column(name = "nome_artistico", length = 150)
     private String nomeArtistico;
 
     @Column(name = "bio_profissional", columnDefinition = "text")
-    private String biografiaProfissional;
+    private String bioProfissional;
 
     @Column(name = "data_inicio_atividade")
     private LocalDate dataInicioAtividade;
@@ -33,39 +33,13 @@ public class Artista extends ConteudoBase {
     @Column(name = "generos_musicais", columnDefinition = "jsonb", nullable = false)
     private List<String> generosMusicais = new ArrayList<>();
 
-    public Long getIdentificador() {
-        return identificador;
-    }
-
-    public String getNomeArtistico() {
-        return nomeArtistico;
-    }
-
-    public void setNomeArtistico(String nomeArtistico) {
-        this.nomeArtistico = nomeArtistico;
-    }
-
-    public String getBiografiaProfissional() {
-        return biografiaProfissional;
-    }
-
-    public void setBiografiaProfissional(String biografiaProfissional) {
-        this.biografiaProfissional = biografiaProfissional;
-    }
-
-    public LocalDate getDataInicioAtividade() {
-        return dataInicioAtividade;
-    }
-
-    public void setDataInicioAtividade(LocalDate dataInicioAtividade) {
-        this.dataInicioAtividade = dataInicioAtividade;
-    }
-
-    public List<String> getGenerosMusicais() {
-        return generosMusicais;
-    }
-
-    public void setGenerosMusicais(List<String> generosMusicais) {
-        this.generosMusicais = generosMusicais;
-    }
+    public Long getIdentificador() { return id; }
+    public String getNomeArtistico() { return nomeArtistico; }
+    public void setNomeArtistico(String nomeArtistico) { this.nomeArtistico = nomeArtistico; }
+    public String getBioProfissional() { return bioProfissional; }
+    public void setBioProfissional(String bioProfissional) { this.bioProfissional = bioProfissional; }
+    public LocalDate getDataInicioAtividade() { return dataInicioAtividade; }
+    public void setDataInicioAtividade(LocalDate dataInicioAtividade) { this.dataInicioAtividade = dataInicioAtividade; }
+    public List<String> getGenerosMusicais() { return generosMusicais; }
+    public void setGenerosMusicais(List<String> generosMusicais) { this.generosMusicais = generosMusicais; }
 }

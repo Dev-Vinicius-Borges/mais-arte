@@ -1,5 +1,3 @@
-node_modules/
-dist/
 target/
 .env
 GUIA_BACKEND_MVP.md

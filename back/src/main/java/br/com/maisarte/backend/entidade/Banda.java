@@ -14,14 +14,14 @@ import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "banda", schema = "public")
-public class Banda extends ConteudoBase {
+public class Banda extends EntidadeConteudoBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_banda")
-    private Long identificador;
+    private Long id;
 
     @Column(name = "nome_banda", nullable = false, length = 150)
-    private String nome;
+    private String nomeBanda;
 
     @Column(nullable = false, columnDefinition = "text")
     private String descricao;
@@ -33,39 +33,13 @@ public class Banda extends ConteudoBase {
     @Column(name = "generos_musicais", columnDefinition = "jsonb", nullable = false)
     private List<String> generosMusicais = new ArrayList<>();
 
-    public Long getIdentificador() {
-        return identificador;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public LocalDate getDataFormacao() {
-        return dataFormacao;
-    }
-
-    public void setDataFormacao(LocalDate dataFormacao) {
-        this.dataFormacao = dataFormacao;
-    }
-
-    public List<String> getGenerosMusicais() {
-        return generosMusicais;
-    }
-
-    public void setGenerosMusicais(List<String> generosMusicais) {
-        this.generosMusicais = generosMusicais;
-    }
+    public Long getIdentificador() { return id; }
+    public String getNomeBanda() { return nomeBanda; }
+    public void setNomeBanda(String nomeBanda) { this.nomeBanda = nomeBanda; }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public LocalDate getDataFormacao() { return dataFormacao; }
+    public void setDataFormacao(LocalDate dataFormacao) { this.dataFormacao = dataFormacao; }
+    public List<String> getGenerosMusicais() { return generosMusicais; }
+    public void setGenerosMusicais(List<String> generosMusicais) { this.generosMusicais = generosMusicais; }
 }

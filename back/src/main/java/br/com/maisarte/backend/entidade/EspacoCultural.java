@@ -16,14 +16,14 @@ import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "espaco_cultural", schema = "public")
-public class EspacoCultural extends ConteudoBase {
+public class EspacoCultural extends EntidadeConteudoBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_espaco_cultural")
-    private Long identificador;
+    private Long id;
 
     @Column(name = "nome_espaco", nullable = false, length = 150)
-    private String nome;
+    private String nomeEspaco;
 
     @Column(nullable = false, columnDefinition = "text")
     private String descricao;
@@ -47,67 +47,21 @@ public class EspacoCultural extends ConteudoBase {
     @ManyToMany(mappedBy = "espacosCulturais")
     private Set<Evento> eventos = new LinkedHashSet<>();
 
-    public Long getIdentificador() {
-        return identificador;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
-    }
-
-    public Map<String, String> getHorarioFuncionamento() {
-        return horarioFuncionamento;
-    }
-
-    public void setHorarioFuncionamento(Map<String, String> horarioFuncionamento) {
-        this.horarioFuncionamento = horarioFuncionamento;
-    }
-
-    public Integer getCapacidadeMaxima() {
-        return capacidadeMaxima;
-    }
-
-    public void setCapacidadeMaxima(Integer capacidadeMaxima) {
-        this.capacidadeMaxima = capacidadeMaxima;
-    }
-
-    public boolean isPublico() {
-        return publico;
-    }
-
-    public void setPublico(boolean publico) {
-        this.publico = publico;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public Set<Evento> getEventos() {
-        return eventos;
-    }
+    public Long getIdentificador() { return id; }
+    public String getNomeEspaco() { return nomeEspaco; }
+    public void setNomeEspaco(String nomeEspaco) { this.nomeEspaco = nomeEspaco; }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public String getSite() { return site; }
+    public void setSite(String site) { this.site = site; }
+    public Map<String, String> getHorarioFuncionamento() { return horarioFuncionamento; }
+    public void setHorarioFuncionamento(Map<String, String> horarioFuncionamento) { this.horarioFuncionamento = horarioFuncionamento; }
+    public Integer getCapacidadeMaxima() { return capacidadeMaxima; }
+    public void setCapacidadeMaxima(Integer capacidadeMaxima) { this.capacidadeMaxima = capacidadeMaxima; }
+    public boolean isPublico() { return publico; }
+    public void setPublico(boolean publico) { this.publico = publico; }
+    public String getEndereco() { return endereco; }
+    public void setEndereco(String endereco) { this.endereco = endereco; }
+    public Set<Evento> getEventos() { return eventos; }
+    public void setEventos(Set<Evento> eventos) { this.eventos = eventos; }
 }

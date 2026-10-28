@@ -22,7 +22,8 @@ public record ArtistaCadastroDto(
         Artista artista = new Artista();
         artista.setNomeArtistico(nomeArtistico);
         artista.setBioProfissional(bioProfissional);
-        artista.setDataInicioAtividade(dataInicioAtividade);
+      winget install Apache.Maven  artista.setDataInicioAtividade(dataInicioAtividade);
+      
         artista.setGenerosMusicais(generosMusicais == null ? List.of() : generosMusicais);
         artista.setFotoPrincipal(fotoPrincipal);
         return artista;

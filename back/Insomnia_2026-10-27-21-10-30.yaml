@@ -1,0 +1,805 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: +Arte
+meta:
+  id: wrk_cc6b5847c3324f569c67696a2cd77e61
+  created: 1791877546300
+  modified: 1791877546300
+  description: ""
+collection:
+  - name: usuario
+    meta:
+      id: fld_e84c5199fcff4567bd5ea73541c0cd28
+      created: 1791877855069
+      modified: 1791877855069
+      sortKey: -1791877855069
+      description: ""
+    children:
+      - url: "{{ _.usuario }}/"
+        name: Buscar todos
+        meta:
+          id: req_204ce39286b74d9a901c0a009d0bc2c4
+          created: 1791877909227
+          modified: 1793128452854
+          isPrivate: false
+          description: ""
+          sortKey: -1791877909227
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.usuario }}/1"
+        name: Buscar por ID
+        meta:
+          id: req_9713dc7a03c545b18573cce9e65af42c
+          created: 1793128318483
+          modified: 1793128445365
+          isPrivate: false
+          description: ""
+          sortKey: -1793128318483
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.usuario }}?email=john@doe.com"
+        name: Buscar por email
+        meta:
+          id: req_fe13b8e819ed48e6a06b263c0f3e43dc
+          created: 1793128329529
+          modified: 1793128434545
+          isPrivate: false
+          description: ""
+          sortKey: -1793128329529
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: artista
+    meta:
+      id: fld_7d0f7ed965704c8e8312ea6b80762df4
+      created: 1791877869185
+      modified: 1791877869185
+      sortKey: -1791877869185
+      description: ""
+    children:
+      - url: "{{ _.artista }}/"
+        name: Criar artista
+        meta:
+          id: req_bdecc44106a3463a948ae0650d14d01f
+          created: 1793128720252
+          modified: 1793129507724
+          isPrivate: false
+          description: ""
+          sortKey: -1793128726443
+        method: POST
+        body:
+          mimeType: application/json
+          text: >
+            
+            {
+              "nome_artistico": "Ana Souza Arte",
+              "tipo_artista": "artista_visual",
+              "bio": "Artista visual curitibana, com atuação em pintura e escultura. Desenvolve trabalhos inspirados na cultura urbana e na memória da cidade.",
+              "foto_url": "https://exemplo.com/imagens/ana-souza.jpg",
+              "classificacao_etaria": "livre",
+              "status_publicacao": "rascunho"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.artista }}/"
+        name: Buscar todos os artistas
+        meta:
+          id: req_faaf110cd2ba4b9ab0e388a273d48540
+          created: 1793128750682
+          modified: 1793134761571
+          isPrivate: false
+          description: ""
+          sortKey: -1793128750682
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.artista }}/1"
+        name: Buscar artista por ID
+        meta:
+          id: req_021d1e53272246118ca9789cc0e799a1
+          created: 1793128758624
+          modified: 1793134746723
+          isPrivate: false
+          description: ""
+          sortKey: -1793128758624
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.artista }}"
+        name: Buscar artistas por nome
+        meta:
+          id: req_f5b367f9dfbe4132a5ee96d65689ebf5
+          created: 1793128771058
+          modified: 1793134736864
+          isPrivate: false
+          description: ""
+          sortKey: -1793128771058
+        method: GET
+        parameters:
+          - name: nome
+            value: John Doe
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.artista }}"
+        name: Buscar artistas por tipo
+        meta:
+          id: req_e1289a200a734d76a4bd804277bf1710
+          created: 1793128778884
+          modified: 1793134728961
+          isPrivate: false
+          description: ""
+          sortKey: -1793128778884
+        method: GET
+        parameters:
+          - name: tipo_artista
+            value: musica
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.artista }}"
+        name: Buscar artistas por status
+        meta:
+          id: req_eed4653592dd431292d8a2c4fdd9eb22
+          created: 1793129585246
+          modified: 1793134719507
+          isPrivate: false
+          description: ""
+          sortKey: -1793129585246
+        method: GET
+        parameters:
+          - name: status_publicacao
+            value: publicado
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.artista }}/1"
+        name: Atualizar artista
+        meta:
+          id: req_9b967e5d91ab4966ab71052af83dcc62
+          created: 1793129773338
+          modified: 1793129807714
+          isPrivate: false
+          description: ""
+          sortKey: -1793128527986
+        method: PUT
+        body:
+          mimeType: application/json
+          text: >-
+            {
+              "nome_artistico": "Ana Souza — Artes Visuais",
+              "bio_profissional": "Artista visual curitibana, com trabalhos em pintura e escultura.",
+              "suporte_linguagem": "Artes visuais"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.artista }}/1"
+        name: Remover artista (desabilitar)
+        meta:
+          id: req_ec0108bb50ec4b53803bf87bdb4b31db
+          created: 1793132081787
+          modified: 1793132165048
+          isPrivate: false
+          description: ""
+          sortKey: -1793132081787
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: evento
+    meta:
+      id: fld_4a9ca6d0de04448888165d8efd41697e
+      created: 1791877881033
+      modified: 1791877881033
+      sortKey: -1791877881033
+      description: ""
+    children:
+      - url: "{{ _.evento }}/"
+        name: Buscar todos os eventos
+        meta:
+          id: req_b54e46cd19294e20b3910f5c13121520
+          created: 1793133186308
+          modified: 1793134709341
+          isPrivate: false
+          description: ""
+          sortKey: -1793133186308
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: ""
+        name: Buscar evento por ID
+        meta:
+          id: req_823f44808fdc40f29bb2c5cfcc328aac
+          created: 1793134693116
+          modified: 1793134701386
+          isPrivate: false
+          description: ""
+          sortKey: -1793134693116
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.evento }}"
+        name: Buscar evento por nome
+        meta:
+          id: req_cc5ed72e6584449a8877c94667bb3ce1
+          created: 1793134788996
+          modified: 1793136313792
+          isPrivate: false
+          description: ""
+          sortKey: -1793134788996
+        method: GET
+        parameters:
+          - name: nome
+            value: Sarau
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.evento }}"
+        name: Buscar evento por classificação etária
+        meta:
+          id: req_d8dfdca580ba459f88d05e9e8884d260
+          created: 1793136331299
+          modified: 1793136368432
+          isPrivate: false
+          description: ""
+          sortKey: -1793136331299
+        method: GET
+        parameters:
+          - name: classificacao_etaria
+            value: "12"
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.evento }}"
+        name: Buscar evento por espaço cultural
+        meta:
+          id: req_0e06f8599a4444ddb58d4e2a449471a1
+          created: 1793136398579
+          modified: 1793136437101
+          isPrivate: false
+          description: ""
+          sortKey: -1793136398579
+        method: GET
+        parameters:
+          - name: id_espaco
+            value: "1"
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.evento }}"
+        name: Buscar evento por data
+        meta:
+          id: req_a3a62fae8bf643a69bd1ebbbdd8861ad
+          created: 1793136455129
+          modified: 1793136480909
+          isPrivate: false
+          description: ""
+          sortKey: -1793136455129
+        method: GET
+        parameters:
+          - name: data
+            value: 2026-11-14
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.evento }}"
+        name: Cadastrar evento
+        meta:
+          id: req_dab66d76f1554677918d70dc15b8895c
+          created: 1793136489224
+          modified: 1793136678602
+          isPrivate: false
+          description: ""
+          sortKey: -1793136489224
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            {
+              "nome_evento": "Sarau da Cena Independente",
+              "descricao": "Uma noite de poesia, música autoral e encontro de artistas locais de Curitiba.",
+              "data_evento": "2026-11-14T19:30:00",
+              "classificacao_etaria": "12+",
+              "id_espaco": 1,
+              "id_endereco": null,
+              "criado_por": 2
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.evento }}/1"
+        name: Atualizar evento
+        meta:
+          id: req_8e813d42d9784200b5b7484ae721d10a
+          created: 1793136524933
+          modified: 1793136724443
+          isPrivate: false
+          description: ""
+          sortKey: -1793136524933
+        method: PUT
+        body:
+          mimeType: application/json
+          text: >-
+            {
+              "nome_evento": "Sarau da Cena Independente — Edição Especial",
+              "descricao": "Encontro de poesia, música autoral e artistas independentes.",
+              "data_evento": "2026-11-15T20:00:00",
+              "classificacao_etaria": "16+",
+              "id_espaco": 1,
+              "id_endereco": null
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.evento }}/1/aprovacao"
+        name: Aprovar evento
+        meta:
+          id: req_01a6b005ece847239ef0f2f33616ee76
+          created: 1793136554912
+          modified: 1793136748944
+          isPrivate: false
+          description: ""
+          sortKey: -1793136554912
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "aprovado": true
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.evento }}/1/status"
+        name: Ativar/desativar evento
+        meta:
+          id: req_ae591fe0de34438480e2475986ca4667
+          created: 1793136579234
+          modified: 1793136801213
+          isPrivate: false
+          description: ""
+          sortKey: -1793136579234
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "ativo": false
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.evento }}/1"
+        name: Remover evento (desativar)
+        meta:
+          id: req_4989f84f3db6423c81fa981793803cd2
+          created: 1793136642505
+          modified: 1793136660600
+          isPrivate: false
+          description: ""
+          sortKey: -1793136642505
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: obra
+    meta:
+      id: fld_9018b35644f84cfa82bbdd4c010beb46
+      created: 1791877890888
+      modified: 1791877890888
+      sortKey: -1791877890888
+      description: ""
+    children:
+      - url: "{{ _.obra }}/"
+        name: Buscar todas as obras
+        meta:
+          id: req_19da31864c5e4e4989a6822edec464b2
+          created: 1793136863075
+          modified: 1793136885644
+          isPrivate: false
+          description: ""
+          sortKey: -1793136863075
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.obra }}/1"
+        name: Buscar obra por ID
+        meta:
+          id: req_ed76c9494cb54652be430f7673af8368
+          created: 1793136893395
+          modified: 1793136908536
+          isPrivate: false
+          description: ""
+          sortKey: -1793136893395
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.obra }}"
+        name: Buscar obras por titulo
+        meta:
+          id: req_9885864c41e64311b7beb3741966a1d1
+          created: 1793136909652
+          modified: 1793136960202
+          isPrivate: false
+          description: ""
+          sortKey: -1793136909652
+        method: GET
+        parameters:
+          - name: titulo
+            value: ddaksldjalsd
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.obra }}"
+        name: Buscar obras por tipo
+        meta:
+          id: req_99dbc95f2b3e40c4907db6420c8ecffb
+          created: 1793136952954
+          modified: 1793136991456
+          isPrivate: false
+          description: ""
+          sortKey: -1793136952954
+        method: GET
+        parameters:
+          - name: tipo_obra
+            value: pintura
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.obra }}"
+        name: Buscar obras por artista
+        meta:
+          id: req_e8a695042271497fb559341c55b5b3ae
+          created: 1793137002819
+          modified: 1793137026806
+          isPrivate: false
+          description: ""
+          sortKey: -1793137002819
+        method: GET
+        parameters:
+          - name: id_artista
+            value: "{% hash 'sha1', 'hex', '' %}"
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.obra }}"
+        name: Buscar obras por banda
+        meta:
+          id: req_95969fca025440d29ef9e9e1d301808d
+          created: 1793137042656
+          modified: 1793139026903
+          isPrivate: false
+          description: ""
+          sortKey: -1793137042656
+        method: GET
+        parameters:
+          - name: id_banda
+            value: "1"
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.obra }}"
+        name: Buscar obras por genero musical
+        meta:
+          id: req_928e0542df7449cd9e3188c9fc422e19
+          created: 1793139029085
+          modified: 1793139169033
+          isPrivate: false
+          description: ""
+          sortKey: -1793139029085
+        method: GET
+        parameters:
+          - name: genero_musical
+            value: pop
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.obra }}"
+        name: Cadastrar obra
+        meta:
+          id: req_781690ddf9bd4c9b953b475d820c41d5
+          created: 1793139216277
+          modified: 1793139582462
+          isPrivate: false
+          description: ""
+          sortKey: -1793139216277
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "titulo": "Entre Ruas e Memórias",
+              "tipo_obra": "Album",
+              "url_midia": "https://exemplo.com/entre-ruas",
+              "id_artista": 1,
+              "id_banda": null,
+              "id_genero": 2
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.obra }}/1"
+        name: Atualizar obra
+        meta:
+          id: req_32623e58721149c2a66675f6085b6794
+          created: 1793139234826
+          modified: 1793139610249
+          isPrivate: false
+          description: ""
+          sortKey: -1793139234826
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "titulo": "Entre Ruas e Memórias Att",
+              "tipo_obra": "Album",
+              "url_midia": "https://exemplo.com/entre-ruas-att",
+              "id_artista": 1,
+              "id_banda": null,
+              "id_genero": 2
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.obra }}/1"
+        name: Desativar obra
+        meta:
+          id: req_42b1aa01e1024fc98a06f478fc4d0168
+          created: 1793139543582
+          modified: 1793139566142
+          isPrivate: false
+          description: ""
+          sortKey: -1793139543582
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: espaco
+    meta:
+      id: fld_82a53bcdc70a48fcb01a0ab4186ea65c
+      created: 1791877898364
+      modified: 1791877898364
+      sortKey: -1791877898364
+      description: ""
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_e93bad40d93ccc0b04fdd22930e6bbf329efc5ff
+    created: 1791877546306
+    modified: 1791877546306
+environments:
+  name: Base Environment
+  meta:
+    id: env_e93bad40d93ccc0b04fdd22930e6bbf329efc5ff
+    created: 1791877546303
+    modified: 1793128411383
+    isPrivate: false
+  data:
+    api: http://localhost:8080/
+    usuario: "{{api}}/usuario"
+    artista: "{{api}}/artista"
+    espaco: "{{api}}/espaco"
+    obra: "{{api}}/obra"
+    evento: "{{api}}/evento"

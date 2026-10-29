@@ -49,11 +49,11 @@ body:
     attributes:
       label: 5) Critérios de aceite (obrigatório)
       options:
-        - label: Dado ..., quando ..., então ...
+        - label: "Cenário 1 — Dado ..., quando ..., então ..."
           required: true
-        - label: Dado ..., quando ..., então ...
+        - label: "Cenário 2 — Dado ..., quando ..., então ..."
           required: true
-        - label: Dado ..., quando ..., então ...
+        - label: "Cenário 3 — Dado ..., quando ..., então ..."
           required: true
   - type: checkboxes
     id: impactos_tecnicos

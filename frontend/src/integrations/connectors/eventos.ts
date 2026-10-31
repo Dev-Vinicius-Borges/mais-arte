@@ -1,6 +1,8 @@
 import { get } from "../http";
 import type { ApiResponse } from "../types/apiResponse";
 
+
+//o java entrega isso
 type EventoDoBack = {
   id: number;
   nomeEvento: string;
@@ -9,6 +11,7 @@ type EventoDoBack = {
   fotoPrincipal: string | null;
 };
 
+//os cards recebem isso
 export type EventoParaCard = {
   id: string;
   title: string;

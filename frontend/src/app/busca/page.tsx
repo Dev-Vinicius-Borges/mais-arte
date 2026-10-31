@@ -1,78 +1,81 @@
 "use client";
 
-
+import { useEffect, useState, type ChangeEvent } from "react";
 import Footer from "@components/global/footer/footer";
 import Navbar from "@components/global/navbar/navbar";
+import SearchField from "@components/global/searchbar/input-search";
+import FilterField from "@components/global/searchbar/input-filter";
 import ArtistCard from "@root/components/pages/busca/artist-card";
 import EventCard from "@root/components/pages/busca/event-card";
 import EspacoCard from "@root/components/pages/busca/espaco-card";
-import SearchField from "@components/global/searchbar/input-search";
-import { cloneElement, useEffect, useState, type ChangeEvent } from "react";
-import FilterField from "@components/global/searchbar/input-filter";
-import { buscarArtista } from "../../service/integracao";
+import { listarTudo, filtrarPorTexto, type CardBusca, type TipoBusca } from "@root/integrations/connectors/busca";
+
+const OPCOES_FILTRO = [
+    { label: "Todos", value: "" },
+    { label: "Artistas", value: "artista" },
+    { label: "Espaços", value: "espaco_cultural" },
+    { label: "Eventos", value: "evento" },
+];
 
 export default function Page() {
-    const [search, setSearch] = useState<string>("");
-    const nomes =["Vinicius Borgtes", "Lucas Báhguets", "Caue Barbiado", "Vinicius Morrer"];
-    const [nomeAleatorio] = useState(
-        () => nomes[Math.floor(Math.random() * nomes.length)]);
-    const nomesEspaco =["Museu do Olho", "Passeio Público", "Jardim Botânico", "Vinicius Morrer"];
-    const [nomeEspacoAleatorio] = useState(
-        () => nomes[Math.floor(Math.random() * nomes.length)]);
-    
-    
-    const cards = [
-        <ArtistCard nome={nomeAleatorio} tipos={["Musica", "Dança"]} endereco="" key={0} />,
-        <EventCard nome="Centralizar div" endereco="Rua HTML - 5" key={67} />,
-        <EspacoCard nome={nomeEspacoAleatorio} tipos={["Yuri", "Yaoi"]} endereco="Rua Baraão do Rio Preto - 67" key={69} />
-    ];
+    const [search, setSearch] = useState("");
+    const [filtro, setFiltro] = useState<TipoBusca | "">("");
+    const [todos, setTodos] = useState<CardBusca[]>([]);
+    const [carregando, setCarregando] = useState(true);
+    const [deuErro, setDeuErro] = useState(false);
 
-    const teste = async () => {
-        const dados = await buscarArtista();
-        dados.array.forEach((dado) => {
-            cards.push(<ArtistCard nome={dado.nome} endereco="" tipos={dado.generos_musicais} key={dado.id_pefil_artista}/>)
-        });
-    };
+    useEffect(() => {
+        listarTudo()
+            .then((resposta) => {
+                if (resposta.success) {
+                    setTodos(resposta.data);
+                } else {
+                    setDeuErro(true);
+                }
+            })
+            .finally(() => setCarregando(false));
+    }, []);
 
-
-
-    useEffect(()=>{
-        teste();
-    },[])
+    // a lista que aparece na tela: aplica o filtro de tipo e depois o de texto
+    const visiveis = filtrarPorTexto(todos, search).filter(
+        (c) => filtro === "" || c.tipo === filtro
+    );
 
     return (
         <main className="bg-surface-inverse">
             <Navbar />
             <div className="mt-20 mb-12 w-11/12 m-auto flex gap-4">
-                <SearchField state={search} change={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} submit={()=>{}} />
-                <FilterField options={["Artistas", "Espaços", "Eventos"]} />
+                <SearchField
+                    state={search}
+                    change={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+                    submit={() => {}}
+                />
+                <FilterField
+                    options={OPCOES_FILTRO}
+                    value={filtro}
+                    change={(e: ChangeEvent<HTMLSelectElement>) => setFiltro(e.target.value as TipoBusca | "")}
+                />
             </div>
 
+            {carregando && <p className="w-11/12 m-auto text-neutral-400">Carregando...</p>}
+            {deuErro && <p className="w-11/12 m-auto text-neutral-400">Não foi possível carregar os resultados.</p>}
+            {!carregando && !deuErro && visiveis.length === 0 && (
+                <p className="w-11/12 m-auto text-neutral-400">Nenhum resultado encontrado.</p>
+            )}
+
             <section className="w-11/12 m-auto grid grid-cols-4 gap-12">
-                {
-                    Array.from({ length: 50 }, (_, index) => {
-                        const cardAleatorio = cards[index % cards.length];
-                        const randomNome = nomes[index % nomes.length];
-                            if (cardAleatorio.type === ArtistCard) {
-                                return cloneElement(cardAleatorio, { 
-                                key: index, 
-                                nome: randomNome 
-                                });
-                            }
-                            const randomNomeEspaco = nomesEspaco[index % nomesEspaco.length];
-                            if (cardAleatorio.type === EspacoCard) {
-                                return cloneElement(cardAleatorio, { 
-                                key: index, 
-                                nome: randomNomeEspaco 
-                                });
-                            }
-                        return cloneElement(cardAleatorio, { key: index });
-                    })
-                }
+                {visiveis.map((c) => {
+                    if (c.tipo === "artista") {
+                        return <ArtistCard key={c.chave} nome={c.nome} tipos={c.tipos} endereco={c.endereco} imageUrl={c.imageUrl} />;
+                    }
+                    if (c.tipo === "espaco_cultural") {
+                        return <EspacoCard key={c.chave} nome={c.nome} tipos={c.tipos} endereco={c.endereco} imageUrl={c.imageUrl} />;
+                    }
+                    return <EventCard key={c.chave} nome={c.nome} endereco={c.endereco} imageUrl={c.imageUrl} />;
+                })}
             </section>
 
             <Footer />
         </main>
     )
-
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { buscarDestaques } from "@root/integrations/connectors/destaques";
 import { useEffect, useState } from "react";
 import useCarousel from "@root/contexts/carousel/useCarousel"
 import CarouselNavigator from "./carousel/carousel-navigator";
@@ -12,56 +13,19 @@ import { PlaceT } from "@root/types/carousel/place";
 
 type Highlight = EventT | ArtistT | PlaceT;
 
-async function fetchHighlights(): Promise<Highlight[]> {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve([
-            { 
-                type: "Evento",
-                title: "Festival de arte", 
-                startDate: new Date(2026, 8, 10), 
-                endDate: new Date(2026, 9, 20), 
-                local: "Praça do japão", 
-                imageUrl: "https://picsum.photos/2000/1000", 
-                pathUrl: "/evento/0", 
-                tags: ["Música", "Dança"], 
-                visible: true 
-            },
-            { 
-                type: "Artista", 
-                category: { 
-                    type: "Música", 
-                    styles: ["MPB"] 
-                }, 
-                imageUrl: "https://picsum.photos/2100/1000", 
-                name: "Janine Mathias", 
-                pathUrl: "/artista/0",
-                resume: "lorem ipsum sit dolor amet consectetur", 
-                visible: false 
-            },
-            { 
-                type: "Espaço Cultural", 
-                imageUrl: "https://picsum.photos/2200/1000", 
-                local: "Centro", 
-                pathUrl: "/espaco/0", 
-                resume: "Lorem ipsum sit dolor amet consectetur", 
-                tags: ["Exposições", "Teatro", "Oficina"], 
-                title: "Centro Cultural", 
-                visible: false 
-            }
-        ]), 500);
-    });
-}
 
 export default function Highlights() {
     const { actualItem, next, previous, setItems } = useCarousel();
     const [highlights, setHighlights] = useState<Highlight[]>([]);
 
     useEffect(() => {
-        fetchHighlights().then((items) => {
-            setHighlights(items);
-            setItems(items.length);
-        });
-    }, [setItems]);
+    buscarDestaques().then((resposta) => {
+        if (resposta.success) {
+            setHighlights(resposta.data);
+            setItems(resposta.data.length);
+        }
+    });
+}, [setItems]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {

@@ -7,6 +7,7 @@ interface artistCardProps {
     nome: string;
     tipos: string[];
     endereco: string;
+    imageUrl: string;
 }
 
 export default function ArtistCard(props: artistCardProps) {
@@ -28,7 +29,7 @@ export default function ArtistCard(props: artistCardProps) {
     return (
 
         <div className={`relative rounded-lg ${tamanho}`}>
-            <Image src="https://picsum.photos/2080/1000" width={500} height={500} alt="" className=" rounded-lg absolute size-full z-0 object-cover" />
+            <Image src={props.imageUrl} width={500} height={500} alt="" className=" rounded-lg absolute size-full z-0 object-cover" />
             <div className="flex flex-col justify-end p-4 size-full text-text-inverse absolute bottom-0 bg-linear-to-t from-black/80 to-black/0">
                 <p className="text-xs 2xl:text-xl">Artista</p>
                 <p className="text-xl 2xl:text-2xl font-semibold">{props.nome}</p>

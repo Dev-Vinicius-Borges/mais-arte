@@ -7,6 +7,7 @@ interface eventCardProps{
 
     nome: string;
     endereco: string;
+    imageUrl: string;
 
 }
 
@@ -29,7 +30,7 @@ export default function EventCard(props: eventCardProps){
     return(
 
         <div className={`relative rounded-lg ${tamanho}`}>
-            <Image src="https://picsum.photos/2085/1000" width={500} height={500} alt="" className="rounded-lg absolute size-full z-0 object-cover"/>
+            <Image src={props.imageUrl} width={500} height={500} alt="" className="rounded-lg absolute size-full z-0 object-cover"/>
             <div className="flex flex-col gap-1 p-4 h-fit w-full text-text-inverse absolute bottom-0 bg-linear-to-t from-black/80 to-black/0">
                 <p className="text-xs 2xl:text-xl">Evento</p>
                 <p className="text-xl 2xl:text-2xl font-semibold">{props.nome}</p>

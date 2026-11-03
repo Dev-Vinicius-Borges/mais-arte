@@ -1,2 +1,6 @@
+/*
+!/back/
+!/.gitignore
+
 *.sql
 !back/supabase/migrations/*.sql

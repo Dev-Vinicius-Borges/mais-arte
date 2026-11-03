@@ -1,6 +1,8 @@
-# +Arte Backend — persistência
+# +Arte Backend
 
-Camada de persistência do +Arte em Java 17, Spring Boot, Spring Data JPA/Hibernate e PostgreSQL. Este módulo contém entidades, repositórios e serviços de domínio; controllers e integração HTTP com o frontend estão fora do escopo atual.
+API REST do +Arte em Java 17, Spring Boot, Spring MVC, Spring Data JPA/Hibernate e PostgreSQL. O módulo contém controllers somente leitura, DTOs, serviços de domínio, repositórios e entidades.
+
+Consulte o [Guia da API Java e integração com o frontend](./GUIA_API_E_INTEGRACAO_FRONTEND.md) para endpoints, contratos JSON, configuração, execução local, consumo pelo frontend e instruções para adicionar rotas.
 
 Os nomes das classes, arquivos, pacotes e métodos próprios do projeto ficam em português, inclusive os serviços ainda não utilizados. Nomes de APIs e anotações do Java, Spring e Hibernate mantêm a grafia original.
 
@@ -12,11 +14,12 @@ Os nomes das classes, arquivos, pacotes e métodos próprios do projeto ficam em
 
 ## Configuração
 
-Copie `.env.example` para `.env` e defina os dados de conexão JDBC:
+Defina os dados de conexão JDBC em `back/.env` (se houver um arquivo de exemplo no checkout, use-o como base) ou diretamente no ambiente:
 
 - `DATABASE_URL`
 - `DATABASE_USERNAME`
 - `DATABASE_PASSWORD`
+- `CORS_ALLOWED_ORIGINS` (padrão local: `http://localhost:3000`)
 
 O Spring carrega esse arquivo local se ele existir. Também é possível fornecer as três variáveis diretamente no ambiente. O `.env` é ignorado pelo Git e não deve conter credenciais versionadas.
 
@@ -26,25 +29,17 @@ O Hibernate usa `ddl-auto: validate`: o schema precisa estar aplicado antes de i
 
 ## Banco de dados
 
-Execute em ordem as migrations em `supabase/migrations/`:
-
-1. `0001_mvp.sql`
-2. `0002_ajustes_evento.sql`
-3. `0003_endereco_evento_espacos.sql`
-4. `0004_ajustes_espaco_cultural.sql`
-5. `0005_modelo_endereco_texto.sql`
-
-A migration `0003` cria a entidade de endereço e a associação opcional entre eventos e espaços culturais. A migration `0005` converte os dados estruturados de endereço em texto no evento, preserva os componentes existentes e então remove a tabela `endereco` e a FK antiga. Ela interrompe a execução se houver evento sem endereço válido. A remoção da tabela é intencional e definitiva; confirme o banco de destino e faça backup antes de aplicar migrations manualmente.
+Os scripts de `0001` a `0007` estão em `supabase/migrations/`. O projeto não configura Flyway nem aplica migrations automaticamente; confira o estado do banco e use o processo de migração adotado pela equipe. Em especial, `0006_recriar_schema_java.sql` contém operações `DROP TABLE`, e `0007_preparar_curadoria_e_moderacao.sql` altera dados e políticas RLS. Não execute esses scripts sem confirmar o banco de destino e, quando aplicável, fazer backup. Consulte o [guia de API](./GUIA_API_E_INTEGRACAO_FRONTEND.md#9-banco-de-dados-e-migrations) para os detalhes e ressalvas.
 
 Cada evento possui um endereço em texto obrigatório e pode estar associado a nenhum, um ou vários espaços culturais. A associação usa `evento_espaco_cultural`.
 
-## Validar conexão e schema
+## Iniciar o servidor e validar conexão/schema
 
 ```bash
 mvn spring-boot:run
 ```
 
-O comando inicia o contexto Spring e valida a conexão e o schema do banco; não há servidor HTTP nem endpoints neste módulo.
+O comando inicia o servidor HTTP na porta `8080` e valida a conexão e o schema do banco com `ddl-auto: validate`.
 
 Para compilar e executar os testes:
 
@@ -54,4 +49,4 @@ mvn verify
 
 ## Estado da API
 
-O backend nesta etapa contém somente a persistência e os serviços Java; não inicia servidor HTTP nem disponibiliza endpoints. O runtime antigo em TypeScript/Fastify e seu cliente Supabase foram removidos. O frontend versionado ainda não consome essas rotas; os endpoints Java e a integração com o frontend ficam para uma etapa posterior.
+A aplicação inicia um servidor HTTP Spring Boot na porta padrão `8080`. Os endpoints GET estão disponíveis para artistas, bandas, espaços culturais e eventos. As rotas de escrita não estão disponíveis até a implementação de autenticação e autorização. A busca global existe como serviço, mas ainda não tem endpoint REST.

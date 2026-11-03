@@ -1,0 +1,2 @@
+*.sql
+!back/supabase/migrations/*.sql

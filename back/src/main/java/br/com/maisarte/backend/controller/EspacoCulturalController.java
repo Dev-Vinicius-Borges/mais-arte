@@ -29,7 +29,8 @@ public class EspacoCulturalController {
     }
 
     @GetMapping("/destaques")
-    public List<EspacoCulturalDto> destaques(@RequestParam(defaultValue = "10") int limite) {
-        return servico.buscarDestaques(limite).stream().map(EspacoCulturalDto::fromEntity).toList();
+    public List<EspacoCulturalDto> destaques(@RequestParam(defaultValue = "3") int limite) {
+        int limiteValidado = LimiteConsulta.validar(limite, 3);
+        return servico.buscarDestaques(limiteValidado).stream().map(EspacoCulturalDto::fromEntity).toList();
     }
 }

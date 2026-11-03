@@ -29,7 +29,8 @@ public class ArtistaController {
     }
 
     @GetMapping("/destaques")
-    public List<ArtistaDto> destaques(@RequestParam(defaultValue = "10") int limite) {
-        return servico.buscarDestaques(limite).stream().map(ArtistaDto::fromEntity).toList();
+    public List<ArtistaDto> destaques(@RequestParam(defaultValue = "4") int limite) {
+        int limiteValidado = LimiteConsulta.validar(limite, 4);
+        return servico.buscarDestaques(limiteValidado).stream().map(ArtistaDto::fromEntity).toList();
     }
 }

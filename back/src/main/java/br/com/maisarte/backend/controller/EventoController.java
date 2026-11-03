@@ -29,7 +29,8 @@ public class EventoController {
     }
 
     @GetMapping("/proximos")
-    public List<EventoDto> buscarProximos(@RequestParam(defaultValue = "10") int limite) {
-        return servicoEventos.buscarProximos(limite).stream().map(EventoDto::fromEntity).toList();
+    public List<EventoDto> buscarProximos(@RequestParam(defaultValue = "4") int limite) {
+        int limiteValidado = LimiteConsulta.validar(limite, 4);
+        return servicoEventos.buscarProximos(limiteValidado).stream().map(EventoDto::fromEntity).toList();
     }
 }

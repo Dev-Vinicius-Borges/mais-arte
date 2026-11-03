@@ -8,18 +8,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface RepositorioArtistas extends JpaRepository<Artista, Long> {
-    @Query("select a from Artista a where a.ativo = true")
+    @Query("select a from Artista a where a.ativo = true and a.verificado = true")
     List<Artista> buscarAtivos();
 
     @Query("select a from Artista a where a.ativo = true and a.verificado = true")
     List<Artista> buscarDestaques(Pageable pageable);
 
-    @Query("select a from Artista a where a.id = :id and a.ativo = true")
+    @Query("select a from Artista a where a.id = :id and a.ativo = true and a.verificado = true")
     java.util.Optional<Artista> buscarAtivoPorId(@Param("id") Long id);
 
     @Query("""
             select a from Artista a
-            where a.ativo = true and
+            where a.ativo = true and a.verificado = true and
               (lower(coalesce(a.nomeArtistico, '')) like concat('%', lower(:termo), '%')
                or lower(coalesce(a.bioProfissional, '')) like concat('%', lower(:termo), '%'))
             """)

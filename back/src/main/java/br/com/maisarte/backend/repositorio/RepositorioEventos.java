@@ -12,16 +12,16 @@ import org.springframework.data.repository.query.Param;
 
 public interface RepositorioEventos extends JpaRepository<Evento, Long> {
     @EntityGraph(attributePaths = "espacosCulturais")
-    @Query("select e from Evento e where e.ativo = true")
+    @Query("select e from Evento e where e.ativo = true and e.verificado = true")
     List<Evento> buscarAtivos();
 
     @EntityGraph(attributePaths = "espacosCulturais")
-    @Query("select e from Evento e where e.id = :id and e.ativo = true")
+    @Query("select e from Evento e where e.id = :id and e.ativo = true and e.verificado = true")
     Optional<Evento> buscarAtivoPorId(@Param("id") Long id);
 
     @Query("""
             select e.id from Evento e
-            where e.ativo = true and e.dataEvento >= :data
+            where e.ativo = true and e.verificado = true and e.dataEvento >= :data
             order by e.dataEvento asc, e.horaInicio asc
             """)
     List<Long> buscarIdsProximos(@Param("data") LocalDate data, Pageable pageable);
@@ -29,14 +29,14 @@ public interface RepositorioEventos extends JpaRepository<Evento, Long> {
     @Query("""
             select distinct e from Evento e
             left join fetch e.espacosCulturais
-            where e.ativo = true and e.id in :ids
+            where e.ativo = true and e.verificado = true and e.id in :ids
             order by e.dataEvento asc, e.horaInicio asc
             """)
     List<Evento> buscarProximosComEspacos(@Param("ids") List<Long> ids);
 
     @Query("""
             select e from Evento e
-            where e.ativo = true and
+            where e.ativo = true and e.verificado = true and
               (lower(e.nomeEvento) like concat('%', lower(:termo), '%')
                or lower(e.descricao) like concat('%', lower(:termo), '%'))
             """)

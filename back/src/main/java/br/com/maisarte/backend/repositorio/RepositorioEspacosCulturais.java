@@ -9,18 +9,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface RepositorioEspacosCulturais extends JpaRepository<EspacoCultural, Long> {
-    @Query("select s from EspacoCultural s where s.ativo = true")
+    @Query("select s from EspacoCultural s where s.ativo = true and s.verificado = true")
     List<EspacoCultural> buscarAtivos();
 
     @Query("select s from EspacoCultural s where s.ativo = true and s.verificado = true")
     List<EspacoCultural> buscarDestaques(Pageable pageable);
 
-    @Query("select s from EspacoCultural s where s.id = :id and s.ativo = true")
+    @Query("select s from EspacoCultural s where s.id = :id and s.ativo = true and s.verificado = true")
     Optional<EspacoCultural> buscarAtivoPorId(@Param("id") Long id);
 
     @Query("""
             select s from EspacoCultural s
-            where s.ativo = true and
+            where s.ativo = true and s.verificado = true and
               (lower(s.nomeEspaco) like concat('%', lower(:termo), '%')
                or lower(s.descricao) like concat('%', lower(:termo), '%'))
             """)

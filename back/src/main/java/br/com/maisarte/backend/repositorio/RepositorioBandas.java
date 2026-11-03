@@ -9,15 +9,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface RepositorioBandas extends JpaRepository<Banda, Long> {
-    @Query("select b from Banda b where b.ativo = true")
+    @Query("select b from Banda b where b.ativo = true and b.verificado = true")
     List<Banda> buscarAtivos();
 
-    @Query("select b from Banda b where b.id = :id and b.ativo = true")
+    @Query("select b from Banda b where b.id = :id and b.ativo = true and b.verificado = true")
     Optional<Banda> buscarAtivaPorId(@Param("id") Long id);
 
     @Query("""
             select b from Banda b
-            where b.ativo = true and
+            where b.ativo = true and b.verificado = true and
               (lower(b.nomeBanda) like concat('%', lower(:termo), '%')
                or lower(b.descricao) like concat('%', lower(:termo), '%'))
             """)
